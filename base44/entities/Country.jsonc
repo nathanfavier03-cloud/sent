@@ -1,0 +1,25 @@
+{
+  "name": "Country",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string", "description": "Country name" },
+    "code": { "type": "string", "description": "ISO country code, e.g. FR" },
+    "region": { "type": "string" },
+    "flag_emoji": { "type": "string" },
+    "dominant_religion": { "type": "string" },
+    "percent_christian": { "type": "number", "description": "Self-identified Christian %" },
+    "percent_catholic": { "type": "number" },
+    "percent_evangelical": { "type": "number" },
+    "evangelical_count": { "type": "string", "description": "Headline count, e.g. '~745,000 (CNEF 2023)'" },
+    "percent_unaffiliated": { "type": "number" },
+    "percent_muslim": { "type": "number" },
+    "legal_to_evangelize": { "type": "boolean" },
+    "persecution_level": { "type": "string", "description": "e.g. 'None — not on Open Doors World Watch List'" },
+    "persecution_index": { "type": "number", "description": "0=none, 100=extreme" },
+    "spiritual_history": { "type": "string", "description": "Long-form briefing copy" },
+    "framing": { "type": "string", "description": "Motivating one-line frame for the nation" },
+    "prayer_points": { "type": "array", "items": { "type": "string" } },
+    "sources": { "type": "array", "items": { "type": "string" } }
+  },
+  "required": ["name", "code"]
+}

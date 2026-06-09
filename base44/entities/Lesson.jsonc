@@ -1,0 +1,19 @@
+{
+  "name": "Lesson",
+  "type": "object",
+  "properties": {
+    "track_code": { "type": "string", "description": "e.g. fr-FR" },
+    "type": {
+      "type": "string",
+      "enum": ["briefing", "prayer", "phrase", "verse", "culture", "teaching", "commission"]
+    },
+    "title": { "type": "string" },
+    "content": { "type": "string", "description": "Long-form lesson body" },
+    "phase": { "type": "number", "description": "1 Foundations, 2 Language, 3 Verses, 4 Culture, 5 Sending" },
+    "order": { "type": "number" },
+    "priority": { "type": "number", "description": "1 essential, 2 important, 3 enrichment" },
+    "xp": { "type": "number" },
+    "ref_id": { "type": "string", "description": "Optional id of a linked Phrase/Verse" }
+  },
+  "required": ["track_code", "type", "title", "order"]
+}

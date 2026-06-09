@@ -1,0 +1,15 @@
+{
+  "name": "TripPlan",
+  "type": "object",
+  "properties": {
+    "user_id": { "type": "string", "description": "Owner of this trip plan" },
+    "country_code": { "type": "string" },
+    "language_code": { "type": "string" },
+    "track_code": { "type": "string", "description": "e.g. fr-FR" },
+    "departure_date": { "type": "string", "format": "date", "description": "Empty if no trip planned yet" },
+    "no_trip_planned": { "type": "boolean", "default": false },
+    "per_day": { "type": "number", "description": "Lessons scheduled per day, derived from runway" },
+    "generated_at": { "type": "string", "format": "date-time" }
+  },
+  "required": ["country_code", "language_code"]
+}

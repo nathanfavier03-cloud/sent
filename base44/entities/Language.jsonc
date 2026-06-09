@@ -1,0 +1,13 @@
+{
+  "name": "Language",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "native_name": { "type": "string" },
+    "code": { "type": "string", "description": "e.g. fr" },
+    "region": { "type": "string" },
+    "script": { "type": "string" },
+    "country_code": { "type": "string", "description": "Primary destination country code this language pairs to" }
+  },
+  "required": ["name", "code"]
+}

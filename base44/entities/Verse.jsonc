@@ -1,0 +1,15 @@
+{
+  "name": "Verse",
+  "type": "object",
+  "properties": {
+    "language_code": { "type": "string" },
+    "reference": { "type": "string", "description": "English reference, e.g. John 3:16" },
+    "reference_native": { "type": "string", "description": "Native reference, e.g. Jean 3:16" },
+    "target_text": { "type": "string" },
+    "english_text": { "type": "string" },
+    "translation": { "type": "string", "description": "e.g. Louis Segond" },
+    "theme": { "type": "string" },
+    "audio_url": { "type": "string" }
+  },
+  "required": ["language_code", "reference", "target_text"]
+}

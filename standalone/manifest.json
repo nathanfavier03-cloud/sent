@@ -1,0 +1,14 @@
+{
+  "name": "Sent — Missionary Training",
+  "short_name": "Sent",
+  "description": "Duolingo-style pre-field training to share the Gospel in another language and culture. By Favier's Lighthouse.",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a1628",
+  "theme_color": "#0a1628",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

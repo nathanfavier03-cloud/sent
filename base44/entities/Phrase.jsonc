@@ -1,0 +1,17 @@
+{
+  "name": "Phrase",
+  "type": "object",
+  "properties": {
+    "language_code": { "type": "string" },
+    "english": { "type": "string" },
+    "target_text": { "type": "string", "description": "Phrase in target language" },
+    "pronunciation": { "type": "string", "description": "Approximate phonetic guide" },
+    "category": {
+      "type": "string",
+      "enum": ["greeting", "gospel", "prayer", "question", "blessing", "courtesy"]
+    },
+    "usefulness_rank": { "type": "number", "description": "1 = most useful for evangelism" },
+    "audio_url": { "type": "string" }
+  },
+  "required": ["language_code", "english", "target_text"]
+}

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#0a1628" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Sent" />
+<link rel="manifest" href="manifest.json" />
+<link rel="apple-touch-icon" href="icon.svg" />
+<link rel="icon" href="icon.svg" type="image/svg+xml" />
+<title>Sent — Favier's Lighthouse</title>
+<style>
+:root{
+  --bg:#0a1628; --bg2:#0d1c33; --card:#13294a; --card2:#172f54;
+  --line:rgba(255,255,255,.08);
+  --text:#eaf0f8; --muted:#92a6c6; --faint:#5d7298;
+  --gold:#f5b945; --gold-2:#ffd27a; --gold-soft:rgba(245,185,69,.14);
+  --beam:linear-gradient(135deg,#ffd27a,#f5b945);
+  --good:#46c08a; --bad:#e9657b;
+  --safe-b:env(safe-area-inset-bottom); --safe-t:env(safe-area-inset-top);
+  --nav-h:64px;
+}
+@media (prefers-color-scheme: light){
+  :root.auto{
+    --bg:#eef3fb; --bg2:#e6edf8; --card:#ffffff; --card2:#f5f8fe;
+    --line:rgba(10,22,40,.10);
+    --text:#0a1628; --muted:#54678a; --faint:#8093b3;
+    --gold-soft:rgba(245,185,69,.20);
+  }
+}
+:root.light{
+  --bg:#eef3fb; --bg2:#e6edf8; --card:#ffffff; --card2:#f5f8fe;
+  --line:rgba(10,22,40,.10);
+  --text:#0a1628; --muted:#54678a; --faint:#8093b3;
+  --gold-soft:rgba(245,185,69,.20);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;height:-webkit-fill-available}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,system-ui,sans-serif;
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(245,185,69,.10), transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, rgba(70,120,200,.12), transparent 55%),
+    var(--bg);
+  color:var(--text); overflow:hidden; -webkit-font-smoothing:antialiased;
+}
+#app{height:100vh;height:-webkit-fill-available;display:flex;flex-direction:column;max-width:520px;margin:0 auto;position:relative}
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(var(--safe-t) + 14px) 18px calc(var(--nav-h) + var(--safe-b) + 22px)}
+.center{justify-content:center}
+
+/* type */
+h1,h2,h3{margin:0;line-height:1.15;letter-spacing:-.02em}
+h1{font-size:30px;font-weight:800}
+h2{font-size:21px;font-weight:750}
+h3{font-size:16px;font-weight:700}
+p{margin:0;line-height:1.5;color:var(--muted)}
+.small{font-size:13px}.tiny{font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);font-weight:700}
+.gold{color:var(--gold)}.muted{color:var(--muted)}
+
+/* brand */
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.01em}
+.brand .bk{font-size:12px;color:var(--faint);font-weight:600;letter-spacing:.02em}
+.lh{width:30px;height:30px;flex:none;display:grid;place-items:center;border-radius:9px;background:var(--gold-soft)}
+.lh svg{width:18px;height:18px}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:12px 0;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.card.tap{cursor:pointer;transition:transform .12s ease, border-color .12s}
+.card.tap:active{transform:scale(.985)}
+.row{display:flex;align-items:center;gap:12px}
+.between{justify-content:space-between}
+.wrap{flex-wrap:wrap}
+.grow{flex:1;min-width:0}
+
+/* buttons */
+.btn{appearance:none;border:none;width:100%;padding:15px 18px;border-radius:14px;font-size:16px;font-weight:750;color:#1a1205;background:var(--beam);cursor:pointer;transition:transform .1s, opacity .2s;box-shadow:0 8px 20px rgba(245,185,69,.28)}
+.btn:active{transform:translateY(1px) scale(.99)}
+.btn:disabled{opacity:.4;box-shadow:none}
+.btn.sec{background:transparent;color:var(--text);border:1px solid var(--line);box-shadow:none}
+.btn.ghost{background:var(--gold-soft);color:var(--gold);box-shadow:none}
+.btn.sm{width:auto;padding:10px 16px;font-size:14px;border-radius:11px}
+
+.chip{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card2);font-size:13px;font-weight:650;color:var(--muted)}
+.chip.on{border-color:var(--gold);color:var(--gold);background:var(--gold-soft)}
+.pill{font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:var(--gold-soft);color:var(--gold)}
+
+input,select{width:100%;padding:14px;border-radius:13px;background:var(--card2);border:1px solid var(--line);color:var(--text);font-size:16px;font-family:inherit}
+label.fl{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:16px 0 7px}
+
+/* progress */
+.bar{height:9px;border-radius:99px;background:var(--card2);overflow:hidden;border:1px solid var(--line)}
+.bar>i{display:block;height:100%;background:var(--beam);border-radius:99px;transition:width .5s ease}
+.ring{--p:0;width:84px;height:84px;border-radius:50%;display:grid;place-items:center;
+  background:conic-gradient(var(--gold) calc(var(--p)*1%), var(--card2) 0);}
+.ring>div{width:68px;height:68px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-weight:800;font-size:20px}
+
+/* lesson type dot */
+.tdot{width:38px;height:38px;border-radius:11px;flex:none;display:grid;place-items:center;font-size:18px;background:var(--gold-soft)}
+.done{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;color:var(--faint);font-size:13px}
+.done.is{background:var(--good);border-color:var(--good);color:#06281c}
+
+/* flashcard */
+.flash{min-height:230px;display:flex;flex-direction:column;justify-content:center;text-align:center;gap:10px}
+.fr{font-size:30px;font-weight:800;letter-spacing:-.02em}
+.pron{font-size:15px;color:var(--gold);font-weight:650}
+.en{font-size:17px;color:var(--muted)}
+.speak{width:58px;height:58px;border-radius:50%;border:none;background:var(--gold-soft);color:var(--gold);font-size:24px;display:grid;place-items:center;margin:4px auto 0;cursor:pointer}
+.speak:active{transform:scale(.94)}
+
+/* nav */
+.nav{position:absolute;left:0;right:0;bottom:0;height:calc(var(--nav-h) + var(--safe-b));padding-bottom:var(--safe-b);
+  display:flex;background:color-mix(in srgb, var(--bg) 82%, transparent);backdrop-filter:blur(18px);
+  border-top:1px solid var(--line);z-index:20}
+.nav button{flex:1;background:none;border:none;color:var(--faint);font-size:10.5px;font-weight:700;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;letter-spacing:.02em}
+.nav button.on{color:var(--gold)}
+.nav svg{width:23px;height:23px}
+
+/* misc */
+.beam-hero{position:relative;border-radius:20px;overflow:hidden;padding:22px;background:linear-gradient(160deg,#10254a,#0a1628);border:1px solid var(--line)}
+.beam-hero::after{content:"";position:absolute;top:-40%;right:-10%;width:220px;height:320px;background:conic-gradient(from 200deg at 70% 30%, transparent, rgba(245,185,69,.22), transparent 40%);filter:blur(6px)}
+.stat{flex:1;min-width:96px;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:12px}
+.stat b{font-size:22px;display:block;letter-spacing:-.02em}
+.fade{animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+.globe{width:160px;height:160px;margin:6px auto;border-radius:50%;display:grid;place-items:center;font-size:74px;
+  background:radial-gradient(circle at 35% 30%, #1d3a66, #0a1628);border:1px solid var(--line);position:relative;filter:grayscale(.5) brightness(.8)}
+.globe.lit{filter:none;box-shadow:0 0 0 4px var(--gold-soft),0 0 40px rgba(245,185,69,.4)}
+.globe .pin{position:absolute;font-size:24px;top:42px;left:78px;opacity:.4}
+.globe.lit .pin{opacity:1;animation:pop .5s ease}
+@keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.3)}100%{transform:scale(1)}}
+.sources{font-size:11px;color:var(--faint);line-height:1.6}
+.divider{height:1px;background:var(--line);margin:14px 0}
+.toast{position:absolute;left:50%;top:calc(var(--safe-t) + 12px);transform:translateX(-50%);background:var(--card);border:1px solid var(--gold);color:var(--gold);
+  padding:10px 16px;border-radius:12px;font-weight:750;font-size:14px;z-index:50;box-shadow:0 10px 30px rgba(0,0,0,.4);animation:fade .3s}
+a{color:var(--gold)}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="toast"></div>
+  <div id="view" class="scroll"></div>
+  <nav id="nav" class="nav" style="display:none"></nav>
+</div>
+
+<script>
+/* ============================================================
+   SENT — Missionary training PWA · Favier's Lighthouse
+   Standalone build (no backend). State in localStorage.
+   French audio via the browser SpeechSynthesis API.
+   ============================================================ */
+
+/* ---------- CONTENT (France → French) ---------- */
+const COUNTRY = {
+  name:"France", code:"FR", flag:"🇫🇷", region:"Western Europe",
+  dominant:"Christianity (Catholic heritage), largely non-practicing",
+  pctChristian:46, pctCatholic:29, pctEvangelical:1.1,
+  evangelicalCount:"~745,000 (CNEF 2023)",
+  pctUnaffiliated:43, pctMuslim:9,
+  legal:true, persecution:"None — not on Open Doors World Watch List",
+  framing:"A secular giant — but God is quietly building a growing remnant.",
+  history:"France is the heart of Western secularism. Historically Catholic — the “eldest daughter of the Church” — it is now one of the least religiously practicing nations in Europe. Only about 5% attend Mass weekly, and roughly 43% of the country (53% of those aged 18–49) claim no religion at all. The barrier here is not persecution or law: evangelism is fully legal under laïcité (strict separation of religion and public life, 1905). The barrier is indifference and intellectual skepticism — faith is treated as strictly private, and aggressive public evangelism reads as a breach of social code. Yet there is real hope: evangelicals are now the majority (58%) of French Protestants, and a new evangelical church opens roughly every ten days — growth from fewer than 50,000 evangelicals in 1950 to over 745,000 today.",
+  prayer:[
+    "Against spiritual apathy and materialism — pray for hunger for God where people say “I don’t need Him.”",
+    "For the small evangelical remnant (~1%) — revival, courage, and more laborers.",
+    "That nominal Catholic heritage would become living, personal faith.",
+    "For French youth — disillusioned and drawn to New Age and the occult; pray for truth.",
+    "For the growing Muslim population — gospel access and Christ-like love.",
+    "Against the stronghold of intellectual pride and laïcité used as a wall against the gospel."
+  ],
+  sources:[
+    "Pew Research — France religious composition",
+    "CNEF (Conseil National des Évangéliques de France) — 745,000 evangelicals, 2023",
+    "Evangelical Focus — evangelicals now the majority of French Protestants",
+    "Open Doors — France not on the World Watch List"
+  ]
+};
+
+const PHRASES = [
+  {r:1,en:"Hello (always say this first!)",fr:"Bonjour",pr:"bohn-ZHOOR",cat:"greeting"},
+  {r:2,en:"May I pray for you?",fr:"Puis-je prier pour vous ?",pr:"pweezh pree-AY poor VOO",cat:"prayer"},
+  {r:3,en:"Do you know Jesus?",fr:"Connaissez-vous Jésus ?",pr:"kon-eh-SAY voo zhay-ZU",cat:"gospel"},
+  {r:4,en:"God loves you.",fr:"Dieu vous aime.",pr:"DYUH voo ZEM",cat:"gospel"},
+  {r:5,en:"Do you believe in God?",fr:"Croyez-vous en Dieu ?",pr:"krwah-YAY voo ahn DYUH",cat:"question"},
+  {r:6,en:"Jesus died for you.",fr:"Jésus est mort pour vous.",pr:"zhay-ZU eh MOR poor VOO",cat:"gospel"},
+  {r:7,en:"Can I share something with you?",fr:"Puis-je partager quelque chose avec vous ?",pr:"pweezh par-ta-ZHAY kel-kuh SHOZ a-vek VOO",cat:"question"},
+  {r:8,en:"Have you heard the good news?",fr:"Avez-vous entendu la bonne nouvelle ?",pr:"a-vay-VOO ahn-tahn-DU la bon noo-VEL",cat:"question"},
+  {r:9,en:"You are loved.",fr:"Vous êtes aimé(e).",pr:"voo-zet eh-MAY",cat:"blessing"},
+  {r:10,en:"I'm praying for you.",fr:"Je prie pour vous.",pr:"zhuh PREE poor VOO",cat:"prayer"},
+  {r:11,en:"Can we talk?",fr:"Pouvons-nous parler ?",pr:"poo-VOHN noo par-LAY",cat:"question"},
+  {r:12,en:"Where is the church?",fr:"Où est l'église ?",pr:"oo eh lay-GLEEZ",cat:"question"},
+  {r:13,en:"Peace be with you.",fr:"Que la paix soit avec vous.",pr:"kuh la PEH swah a-vek VOO",cat:"blessing"},
+  {r:14,en:"Thank you",fr:"Merci",pr:"mair-SEE",cat:"courtesy"},
+  {r:15,en:"Excuse me",fr:"Excusez-moi",pr:"ex-kU-zay-MWAH",cat:"courtesy"}
+];
+
+const VERSES = [
+  {ref:"John 3:16",refFr:"Jean 3:16",theme:"The love of God",
+   fr:"Car Dieu a tant aimé le monde qu'il a donné son Fils unique, afin que quiconque croit en lui ne périsse point, mais qu'il ait la vie éternelle.",
+   en:"For God so loved the world that he gave his only Son, that whoever believes in him should not perish but have eternal life."},
+  {ref:"John 20:21",refFr:"Jean 20:21",theme:"The sending (app namesake)",
+   fr:"Comme le Père m'a envoyé, moi aussi je vous envoie.",
+   en:"As the Father has sent me, even so I am sending you."},
+  {ref:"John 14:6",refFr:"Jean 14:6",theme:"The only way",
+   fr:"Jésus lui dit : Je suis le chemin, la vérité, et la vie. Nul ne vient au Père que par moi.",
+   en:"Jesus said: I am the way, the truth, and the life. No one comes to the Father except through me."},
+  {ref:"Romans 5:8",refFr:"Romains 5:8",theme:"The cross",
+   fr:"Mais Dieu prouve son amour envers nous, en ce que, lorsque nous étions encore des pécheurs, Christ est mort pour nous.",
+   en:"But God shows his love for us in that while we were still sinners, Christ died for us."},
+  {ref:"Romans 10:9",refFr:"Romains 10:9",theme:"Confession and salvation",
+   fr:"Si tu confesses de ta bouche le Seigneur Jésus, et si tu crois dans ton cœur que Dieu l'a ressuscité des morts, tu seras sauvé.",
+   en:"If you confess with your mouth that Jesus is Lord and believe in your heart that God raised him from the dead, you will be saved."}
+];
+
+const TEACH = [
+  {title:"The Gospel You Carry",
+   body:"Before language, get clear on the simple gospel: God loves you, sin separates us, Jesus died and rose to bring us back, and we respond by faith. In France, lead with this as a personal story and hope — not a debate to win."},
+  {title:"Earn the Conversation",
+   body:"France is intellectually skeptical and post-Christian. Aggressive street preaching backfires; relationship, coffee-table conversation, and personal testimony fit the culture. Expect debate, not hostility — stay warm, listen, and earn the right to share the hope you have."}
+];
+
+const CULTURE = [
+  {title:"Always Say “Bonjour” First",
+   body:"In France, saying “Bonjour” before anything — entering a shop, asking a question — is essential courtesy. Skipping it reads as rude and shuts the conversation down. It is your gateway to every interaction."},
+  {title:"Vous, Tu & La Bise",
+   body:"Use “vous” (formal) with anyone you don’t know well or who is older; “tu” only once invited. Greet with a handshake when meeting; “la bise” (cheek kisses, 2–4 by region) is for friends — don’t hug strangers. Dress neatly, understated; avoid loud logos and being loud in public."}
+];
+
+const PRAYERS = [
+  {title:"Pray: Spiritual Apathy",
+   body:"Pray against the spirit of indifference and materialism. Ask God for spiritual hunger where people say “I don’t need Him,” and for open hearts in the people you’ll meet."},
+  {title:"Pray for the Remnant",
+   body:"Pray for France’s ~1% evangelical believers — for courage, revival, and more laborers. Pray that nominal Catholic heritage would become living faith."}
+];
+
+const CHECKLIST = [
+  {cat:"documents",task:"Passport valid 6+ months beyond travel",detail:"Check expiry now; renewals take weeks."},
+  {cat:"documents",task:"Confirm Schengen 90/180-day rule",detail:"US citizens: no visa for stays under 90 days; longer needs a visa."},
+  {cat:"documents",task:"Travel & medical insurance",detail:"Carry proof; some Schengen entries request it."},
+  {cat:"health",task:"Routine vaccines up to date",detail:"No special vaccines required for France; confirm MMR / Tdap / flu."},
+  {cat:"packing",task:"Type E power adapter (230V)",detail:"France uses Type E plugs; bring a converter for US devices."},
+  {cat:"packing",task:"Neat, modest clothing — no athletic wear",detail:"French dress understated; avoid loud logos and flip-flops in the city."},
+  {cat:"packing",task:"French Bibles / tracts (Louis Segond)",detail:"Bring or source locally for handing out in conversation."},
+  {cat:"logistics",task:"French eSIM or local SIM",detail:"Set up data before you land for maps and translation."},
+  {cat:"safety",task:"Save emergency number 112",detail:"EU-wide emergency line; works from any phone."},
+  {cat:"safety",task:"Note U.S. Embassy Paris contact",detail:"2 Avenue Gabriel, 75008 Paris; register travel with STEP."}
+];
+
+/* ---------- CURRICULUM (ordered lesson sequence) ---------- */
+const XP = {briefing:25,prayer:5,teaching:20,culture:15,phrase:10,verse:15,commission:50};
+function buildCurriculum(){
+  const L=[];let i=0;
+  const add=(o)=>L.push(Object.assign({id:o.type+"-"+(i++),xp:XP[o.type]},o));
+  add({type:"briefing",phase:1,title:"Know Before You Go: France",body:COUNTRY.history});
+  add({type:"prayer",phase:1,title:PRAYERS[0].title,body:PRAYERS[0].body});
+  add({type:"teaching",phase:1,title:TEACH[0].title,body:TEACH[0].body});
+  PHRASES.forEach(p=>add({type:"phrase",phase:2,title:p.en,data:p}));
+  add({type:"prayer",phase:3,title:PRAYERS[1].title,body:PRAYERS[1].body});
+  VERSES.forEach(v=>add({type:"verse",phase:3,title:v.refFr,data:v}));
+  CULTURE.forEach(c=>add({type:"culture",phase:4,title:c.title,body:c.body}));
+  add({type:"teaching",phase:4,title:TEACH[1].title,body:TEACH[1].body});
+  add({type:"commission",phase:5,title:"Préparé(e) et envoyé(e) en France",
+       body:"You’ve learned the briefing, the phrases, the verses, and the culture. You’re prepared and you’re sent.\n\n« Comme le Père m’a envoyé, moi aussi je vous envoie. » — Jean 20:21\n\nGo in peace; God goes with you."});
+  return L;
+}
+const CURR = buildCurriculum();
+const PHASES = {1:"Foundations",2:"Language Core",3:"Heart & Verses",4:"Culture & Readiness",5:"Sending"};
+const TYPE_ICON = {briefing:"🌍",prayer:"🙏",teaching:"📖",phrase:"🗣️",verse:"✝️",culture:"🤝",commission:"🕯️"};
+
+/* ---------- STATE ---------- */
+const KEY="sent.state.v1";
+let S = load();
+function load(){ try{return JSON.parse(localStorage.getItem(KEY))||null}catch(e){return null} }
+function save(){ localStorage.setItem(KEY,JSON.stringify(S)) }
+function fresh(){ return {onboarded:false,country:"FR",language:"fr",departure:null,
+  done:{},xp:0,streak:0,lastDay:null,checklist:{},theme:"auto",view:"today"} }
+
+/* ---------- HELPERS ---------- */
+const $=(s,r=document)=>r.querySelector(s);
+const el=(h)=>{const t=document.createElement('template');t.innerHTML=h.trim();return t.content.firstChild};
+const esc=(s)=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function daysLeft(){ if(!S.departure) return null;
+  const d=Math.ceil((new Date(S.departure)-new Date(new Date().toDateString()))/864e5); return d; }
+function perDay(){ const dl=daysLeft(); const days=Math.max(1,Math.min(dl||21,30));
+  return Math.max(1,Math.min(4,Math.ceil(CURR.length/days))); }
+function completedCount(){ return CURR.filter(l=>S.done[l.id]).length; }
+function isDone(l){ return !!S.done[l.id]; }
+function nextSet(){ const pd=perDay(); const todo=CURR.filter(l=>!S.done[l.id]); return todo.slice(0,pd); }
+function trackComplete(){ return completedCount()===CURR.length; }
+function todayStr(){ return new Date().toDateString(); }
+
+function complete(l){
+  if(S.done[l.id]) return;
+  S.done[l.id]=true; S.xp+=l.xp;
+  // streak: count once per calendar day of activity
+  const t=todayStr();
+  if(S.lastDay!==t){
+    const y=new Date(Date.now()-864e5).toDateString();
+    S.streak = (S.lastDay===y)? S.streak+1 : 1;
+    S.lastDay=t;
+  }
+  save();
+  if(trackComplete()){ toast("🕯️ Track complete — you are Sent!"); }
+}
+
+let toastT;
+function toast(msg){ const t=$("#toast"); t.innerHTML=`<div class="toast">${esc(msg)}</div>`;
+  clearTimeout(toastT); toastT=setTimeout(()=>t.innerHTML="",2200); }
+
+/* ---------- AUDIO (French TTS) ---------- */
+let frVoice=null;
+function pickVoice(){ const vs=speechSynthesis.getVoices();
+  frVoice = vs.find(v=>/fr-FR/i.test(v.lang)) || vs.find(v=>/^fr/i.test(v.lang)) || null; }
+if('speechSynthesis' in window){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; }
+function speak(text){
+  if(!('speechSynthesis' in window)){ toast("Audio not supported on this browser"); return; }
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang="fr-FR"; if(frVoice)u.voice=frVoice; u.rate=.9; u.pitch=1;
+  speechSynthesis.speak(u);
+}
+window.speak=speak;
+
+/* ============================================================
+   VIEWS
+   ============================================================ */
+const V=$("#view"), NAV=$("#nav");
+
+function render(){
+  applyTheme();
+  if(!S.onboarded){ NAV.style.display="none"; return onboarding(); }
+  NAV.style.display="flex"; renderNav();
+  const map={today:viewToday,learn:viewLearn,nation:viewNation,trip:viewTrip,me:viewMe};
+  (map[S.view]||viewToday)();
+  V.scrollTop=0;
+}
+function applyTheme(){
+  const t = S?.theme || "auto";
+  // auto -> .auto (follows OS, light override in media query); light -> forced light; dark -> no class (root defaults are dark)
+  document.documentElement.className = t==="light" ? "light" : t==="auto" ? "auto" : "";
+}
+
+/* ---- Lighthouse icon ---- */
+const LH=`<span class="lh"><svg viewBox="0 0 24 24" fill="none"><path d="M9 21h6l-1-9H10l-1 9z" fill="#f5b945"/><path d="M10.5 12h3l-.4-3h-2.2l-.4 3z" fill="#ffd27a"/><circle cx="12" cy="6.5" r="2.3" fill="#ffd27a"/><path d="M14.3 6.5l5-2M14.3 6.5l5 2M9.7 6.5l-5-2M9.7 6.5l-5 2" stroke="#f5b945" stroke-width="1.3" stroke-linecap="round"/></svg></span>`;
+function header(sub){ return `<div class="row between" style="margin-bottom:6px">
+  <div class="brand">${LH}<div>Sent<div class="bk">Favier’s Lighthouse</div></div></div>
+  <button class="chip" onclick="cycleTheme()">${S.theme==='light'?'☀️':S.theme==='dark'?'🌙':'🌗'} Theme</button>
+  </div>${sub?`<p class="small" style="margin-bottom:8px">${sub}</p>`:""}`; }
+window.cycleTheme=()=>{ S.theme = S.theme==="auto"?"light":S.theme==="light"?"dark":"auto"; save(); render(); };
+
+/* ---------- ONBOARDING ---------- */
+let ob={lang:"fr",country:"FR",dep:""};
+function onboarding(){
+  V.innerHTML="";
+  V.appendChild(el(`<div class="fade">
+    <div style="height:calc(var(--safe-t) + 30px)"></div>
+    <div class="brand" style="font-size:26px">${LH}<div>Sent<div class="bk" style="font-size:13px">by Favier’s Lighthouse</div></div></div>
+    <div class="beam-hero" style="margin-top:20px">
+      <p class="pill">John 20:21</p>
+      <h1 style="margin:12px 0 8px">As the Father<br>has sent me,<br><span class="gold">I am sending you.</span></h1>
+      <p>Short, daily, bite-sized training to prepare you to share the Gospel — in their language and culture — before you go.</p>
+    </div>
+
+    <label class="fl">Target language</label>
+    <select id="ob-lang"><option value="fr">🇫🇷 French — Français</option></select>
+
+    <label class="fl">Destination</label>
+    <select id="ob-country"><option value="FR">🇫🇷 France — Western Europe</option></select>
+
+    <label class="fl">Departure date</label>
+    <input id="ob-dep" type="date" />
+    <label class="row" style="gap:9px;margin-top:10px;color:var(--muted);font-size:14px;font-weight:600">
+      <input type="checkbox" id="ob-none" style="width:auto" onchange="document.getElementById('ob-dep').disabled=this.checked"/> No trip planned yet
+    </label>
+
+    <button class="btn" style="margin-top:22px" onclick="startTrack()">Build my training track →</button>
+    <p class="tiny" style="text-align:center;margin-top:14px">Phase 1 MVP · France · Offline-ready</p>
+  </div>`));
+  const t=new Date(Date.now()+21*864e5).toISOString().slice(0,10);
+  $("#ob-dep").value=t;
+}
+window.startTrack=()=>{
+  S=fresh(); S.onboarded=true;
+  S.language=$("#ob-lang").value; S.country=$("#ob-country").value;
+  S.departure = $("#ob-none").checked ? null : ($("#ob-dep").value||null);
+  S.view="today"; save(); toast("Bienvenue! Your track is ready."); render();
+};
+
+/* ---------- TODAY ---------- */
+function viewToday(){
+  const dl=daysLeft(), set=nextSet(), cc=completedCount(), pct=Math.round(cc/CURR.length*100);
+  V.innerHTML="";
+  const cd = dl===null
+    ? `<h2>Self-paced track</h2><p class="small">No trip date set — learn at your own pace.</p>`
+    : dl>0 ? `<h2>You leave for France in</h2><div class="row" style="align-items:baseline;gap:8px"><span class="gold" style="font-size:46px;font-weight:850;letter-spacing:-.03em">${dl}</span><span style="font-size:20px;font-weight:700">day${dl===1?'':'s'}</span></div>`
+    : `<h2 class="gold">Departure day — go!</h2>`;
+  const tight = (dl!==null && dl>0 && dl<7) ? `<div class="chip on" style="margin-top:8px">⏱ Tight runway — focusing on essentials</div>`:"";
+
+  V.appendChild(el(`<div class="fade">
+    ${header()}
+    <div class="beam-hero">${cd}${tight}
+      <div class="row" style="margin-top:16px;gap:10px">
+        <div class="chip">🔥 ${S.streak} day streak</div>
+        <div class="chip">⭐ ${S.xp} XP</div>
+      </div>
+    </div>
+
+    <div class="row between" style="margin:18px 2px 6px"><h3>Today’s training</h3><span class="tiny">${cc}/${CURR.length} done</span></div>
+    <div class="bar" style="margin:0 2px 4px"><i style="width:${pct}%"></i></div>
+    <div id="set"></div>
+  </div>`));
+
+  const wrap=$("#set");
+  if(set.length===0){
+    wrap.appendChild(el(`<div class="card" style="text-align:center">
+      <div style="font-size:40px">🕯️</div><h3 style="margin:8px 0">You’re fully trained!</h3>
+      <p class="small">Track complete. France is lit on your globe.</p>
+      <button class="btn ghost sm" style="margin:14px auto 0" onclick="go('me')">See my commissioning →</button></div>`));
+  } else {
+    set.forEach(l=> wrap.appendChild(lessonRow(l)) );
+    wrap.appendChild(el(`<p class="tiny" style="text-align:center;margin-top:10px">${perDay()} lesson${perDay()===1?'':'s'} a day · ~${perDay()*3} min</p>`));
+  }
+}
+function lessonRow(l){
+  const c=el(`<div class="card tap row">
+    <div class="tdot">${TYPE_ICON[l.type]}</div>
+    <div class="grow"><div class="tiny">${PHASES[l.phase]}</div><h3>${esc(l.title)}</h3></div>
+    <div class="done ${isDone(l)?'is':''}">${isDone(l)?'✓':''}</div>
+  </div>`);
+  c.onclick=()=>openLesson(l.id);
+  return c;
+}
+
+/* ---------- LESSON DETAIL (overlay-ish full view) ---------- */
+function openLesson(id){
+  const l=CURR.find(x=>x.id===id); if(!l)return;
+  V.innerHTML="";
+  let inner="";
+  if(l.type==="phrase"){ const p=l.data;
+    inner=`<div class="card flash">
+      <span class="pill" style="margin:0 auto">${p.cat}</span>
+      <div class="fr">${esc(p.fr)}</div>
+      <div class="pron">${esc(p.pr)}</div>
+      <div class="en">${esc(p.en)}</div>
+      <button class="speak" onclick="speak(${JSON.stringify(p.fr)})">🔊</button>
+      <p class="tiny" style="margin-top:6px">Tap to hear it in French</p>
+    </div>`;
+  } else if(l.type==="verse"){ const v=l.data;
+    inner=`<div class="card">
+      <div class="row between"><span class="pill">${esc(v.refFr)}</span><span class="tiny">${esc(v.theme)}</span></div>
+      <p style="color:var(--text);font-size:19px;line-height:1.5;font-weight:650;margin:14px 0">${esc(v.fr)}</p>
+      <button class="speak" style="margin:0 0 10px" onclick="speak(${JSON.stringify(v.fr)})">🔊</button>
+      <div class="divider"></div>
+      <p class="small">${esc(v.en)}</p>
+      <p class="tiny" style="margin-top:8px">Louis Segond · ${esc(v.ref)}</p>
+    </div>`;
+  } else if(l.type==="commission"){
+    inner=`<div class="beam-hero" style="text-align:center">
+      <div style="font-size:46px">🕯️</div>
+      <h1 style="margin:10px 0">${esc(l.title)}</h1>
+      <p style="white-space:pre-line;color:var(--gold-2)">${esc(l.body)}</p>
+    </div>`;
+  } else {
+    inner=`<div class="card">
+      <div class="row" style="margin-bottom:12px"><div class="tdot">${TYPE_ICON[l.type]}</div>
+        <div><div class="tiny">${PHASES[l.phase]} · ${l.type}</div><h2>${esc(l.title)}</h2></div></div>
+      <p style="white-space:pre-line;color:var(--text);line-height:1.6">${esc(l.body)}</p>
+    </div>`;
+  }
+  V.appendChild(el(`<div class="fade">
+    <div class="row between" style="margin-bottom:6px">
+      <button class="chip" onclick="render()">← Back</button>
+      <span class="chip">⭐ +${l.xp} XP</span>
+    </div>
+    ${inner}
+    <button class="btn" style="margin-top:8px" onclick="finishLesson('${l.id}')">
+      ${isDone(l)?'Done ✓ — back to today':'Mark complete  ✓'}</button>
+  </div>`));
+  V.scrollTop=0;
+}
+window.finishLesson=(id)=>{ const l=CURR.find(x=>x.id===id); complete(l);
+  const conf = trackComplete()?"me":"today"; S.view=conf; save(); render();
+  if(!trackComplete()) toast(`+${l.xp} XP`); };
+window.openLesson=openLesson;
+
+/* ---------- LEARN (library) ---------- */
+function viewLearn(){
+  V.innerHTML="";
+  const groups=[
+    {k:"phrase",t:"Evangelism Phrases",d:"Ranked by usefulness — not tourist phrases"},
+    {k:"verse",t:"Memory Verses",d:"Choose-your-own, in French (Louis Segond)"},
+    {k:"culture",t:"Cultural Knowings",d:"Do’s & don’ts before you go"},
+    {k:"teaching",t:"Teaching Modules",d:"Gospel-sharing essentials"},
+    {k:"prayer",t:"Prayer Focus",d:"Daily prayer for the nation"},
+    {k:"briefing",t:"Nation Briefing",d:"Know before you go"}
+  ];
+  let body=header("Your full France training library.");
+  groups.forEach(g=>{
+    const items=CURR.filter(l=>l.type===g.k);
+    const done=items.filter(isDone).length;
+    body+=`<div class="card tap" onclick="openGroup('${g.k}')">
+      <div class="row between"><div class="row"><div class="tdot">${TYPE_ICON[g.k]}</div>
+        <div><h3>${g.t}</h3><p class="small">${g.d}</p></div></div>
+        <div style="text-align:right"><div class="tiny">${done}/${items.length}</div><div style="font-size:18px;color:var(--faint)">›</div></div>
+      </div></div>`;
+  });
+  V.appendChild(el(`<div class="fade">${body}</div>`));
+}
+window.openGroup=(k)=>{
+  const items=CURR.filter(l=>l.type===k);
+  V.innerHTML="";
+  let body=`<div class="row between" style="margin-bottom:8px"><button class="chip" onclick="go('learn')">← Library</button>
+    <span class="chip">${TYPE_ICON[k]} ${items.length}</span></div>`;
+  items.forEach(l=>{ body+=`<div class="card tap row" onclick="openLesson('${l.id}')">
+    <div class="tdot">${TYPE_ICON[l.type]}</div>
+    <div class="grow"><h3>${esc(l.title)}</h3>${l.type==='phrase'?`<p class="small">${esc(l.data.fr)} · <span class="gold">${esc(l.data.pr)}</span></p>`:l.type==='verse'?`<p class="small">${esc(l.data.theme)}</p>`:`<p class="small">${esc((l.body||'').slice(0,60))}…</p>`}</div>
+    <div class="done ${isDone(l)?'is':''}">${isDone(l)?'✓':''}</div></div>`; });
+  V.appendChild(el(`<div class="fade">${body}</div>`));
+  V.scrollTop=0;
+};
+
+/* ---------- NATION (briefing) ---------- */
+function viewNation(){
+  const c=COUNTRY;
+  V.innerHTML="";
+  const stat=(b,l)=>`<div class="stat"><b class="gold">${b}</b><span class="small">${l}</span></div>`;
+  let pp=c.prayer.map(p=>`<div class="card row" style="padding:14px"><div class="tdot">🙏</div><p style="color:var(--text)">${esc(p)}</p></div>`).join("");
+  V.appendChild(el(`<div class="fade">
+    ${header()}
+    <div class="beam-hero">
+      <div class="row between"><h1>${c.flag} ${c.name}</h1><span class="pill">Know before you go</span></div>
+      <p style="margin-top:8px;color:var(--gold-2);font-weight:600">${esc(c.framing)}</p>
+    </div>
+    <div class="row wrap" style="gap:10px;margin-top:14px">
+      ${stat(c.pctChristian+"%","Christian")}
+      ${stat(c.pctEvangelical+"%","Evangelical")}
+      ${stat(c.pctUnaffiliated+"%","No religion")}
+      ${stat(c.pctMuslim+"%","Muslim")}
+    </div>
+    <div class="card">
+      <div class="row between"><h3>Can you evangelize?</h3><span class="chip ${c.legal?'on':''}">${c.legal?'✓ Legal':'Restricted'}</span></div>
+      <div class="divider"></div>
+      <div class="row between"><h3>Persecution</h3><span class="small" style="text-align:right;max-width:60%">${esc(c.persecution)}</span></div>
+    </div>
+    <div class="card"><h3 style="margin-bottom:8px">Spiritual environment</h3>
+      <p style="color:var(--text);line-height:1.6">${esc(c.history)}</p></div>
+    <div class="row between" style="margin:18px 2px 4px"><h3>Prayer focus</h3><span class="tiny">${c.prayer.length} prompts</span></div>
+    ${pp}
+    <div class="card"><p class="tiny">Sources (verify before live use)</p>
+      <div class="sources" style="margin-top:6px">${c.sources.map(s=>"• "+esc(s)).join("<br>")}</div></div>
+  </div>`));
+}
+
+/* ---------- TRIP (checklist) ---------- */
+function viewTrip(){
+  V.innerHTML="";
+  const cats={documents:"📄 Documents",health:"💉 Health",packing:"🎒 Packing",logistics:"📶 Logistics",safety:"🛡️ Safety"};
+  const dl=daysLeft();
+  const doneN=CHECKLIST.filter((_,i)=>S.checklist[i]).length;
+  let body=header("Pre-departure checklist for France.");
+  body+=`<div class="card"><div class="row between"><h3>Trip readiness</h3><span class="gold" style="font-weight:800">${doneN}/${CHECKLIST.length}</span></div>
+    <div class="bar" style="margin-top:10px"><i style="width:${Math.round(doneN/CHECKLIST.length*100)}%"></i></div>
+    ${dl!==null?`<p class="small" style="margin-top:8px">${dl>0?`${dl} days to go`:'Departure day'}</p>`:''}</div>`;
+  Object.keys(cats).forEach(cat=>{
+    const items=CHECKLIST.map((x,i)=>({...x,i})).filter(x=>x.cat===cat);
+    if(!items.length)return;
+    body+=`<p class="tiny" style="margin:18px 4px 6px">${cats[cat]}</p>`;
+    items.forEach(x=>{ body+=`<div class="card tap row" onclick="toggleChk(${x.i})" style="padding:14px">
+      <div class="done ${S.checklist[x.i]?'is':''}">${S.checklist[x.i]?'✓':''}</div>
+      <div class="grow"><h3 style="font-size:15px">${esc(x.task)}</h3><p class="small">${esc(x.detail)}</p></div></div>`; });
+  });
+  V.appendChild(el(`<div class="fade">${body}</div>`));
+}
+window.toggleChk=(i)=>{ S.checklist[i]=!S.checklist[i]; save(); viewTrip(); };
+
+/* ---------- ME (progress + globe + commission) ---------- */
+function viewMe(){
+  V.innerHTML="";
+  const cc=completedCount(), pct=Math.round(cc/CURR.length*100), lit=trackComplete();
+  let phaseRows="";
+  Object.keys(PHASES).forEach(ph=>{
+    const items=CURR.filter(l=>l.phase==+ph), d=items.filter(isDone).length;
+    phaseRows+=`<div class="card row between" style="padding:13px 16px">
+      <div><div class="tiny">Phase ${ph}</div><h3 style="font-size:15px">${PHASES[ph]}</h3></div>
+      <div style="text-align:right;min-width:90px"><div class="bar"><i style="width:${Math.round(d/items.length*100)}%"></i></div>
+      <span class="tiny">${d}/${items.length}</span></div></div>`;
+  });
+  V.appendChild(el(`<div class="fade">
+    ${header()}
+    <div class="card row" style="gap:18px">
+      <div class="ring" style="--p:${pct}"><div>${pct}%</div></div>
+      <div class="grow">
+        <div class="row" style="gap:8px;margin-bottom:8px"><span class="chip">🔥 ${S.streak} streak</span><span class="chip">⭐ ${S.xp} XP</span></div>
+        <p class="small">${cc} of ${CURR.length} lessons complete on your <b class="gold">France · French</b> track.</p>
+      </div>
+    </div>
+
+    <div class="card" style="text-align:center">
+      <p class="tiny">Your world</p>
+      <div class="globe ${lit?'lit':''}"><span>🌍</span><span class="pin">📍</span></div>
+      <h3>${lit?'France is lit! 🇫🇷':'Finish the track to light up France'}</h3>
+      <p class="small" style="margin-top:4px">${lit?'You completed the full France track.':'Complete every lesson to drop your pin.'}</p>
+    </div>
+
+    ${lit?`<div class="beam-hero" style="text-align:center"><div style="font-size:40px">🕯️</div>
+      <h2 style="margin:8px 0">Préparé(e) et envoyé(e)</h2>
+      <p style="color:var(--gold-2)">« Comme le Père m’a envoyé, moi aussi je vous envoie. » — Jean 20:21</p>
+      <p class="small" style="margin-top:8px">You are trained. You are Sent.</p></div>`:''}
+
+    <div class="row between" style="margin:18px 2px 4px"><h3>Progress by phase</h3></div>
+    ${phaseRows}
+
+    <button class="btn sec" style="margin-top:18px" onclick="resetAll()">Reset my progress</button>
+    <p class="tiny" style="text-align:center;margin-top:18px">Sent · Phase 1 MVP · Favier’s Lighthouse</p>
+  </div>`));
+}
+window.resetAll=()=>{ if(confirm("Reset all progress and start onboarding again?")){ S=fresh(); save(); render(); } };
+
+/* ---------- NAV ---------- */
+function renderNav(){
+  const items=[
+    ["today","Today",'<path d="M3 11l9-8 9 8v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/>'],
+    ["learn","Learn",'<path d="M4 5h16v3H4zM4 10.5h16v3H4zM4 16h10v3H4z"/>'],
+    ["nation","Nation",'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" fill="none" stroke="currentColor" stroke-width="1.4"/>'],
+    ["trip","Trip",'<path d="M9 4h6v3h4v13H5V7h4zM11 6v1h2V6z"/>'],
+    ["me","Me",'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>']
+  ];
+  NAV.innerHTML=items.map(([k,l,p])=>`<button class="${S.view===k?'on':''}" onclick="go('${k}')">
+    <svg viewBox="0 0 24 24" fill="currentColor">${p}</svg>${l}</button>`).join("");
+}
+window.go=(v)=>{ S.view=v; save(); render(); };
+
+/* ---------- BOOT ---------- */
+if(!S){ S=fresh(); save(); }
+if(typeof S.onboarded==="undefined"){ S=Object.assign(fresh(),S); }
+render();
+
+/* service worker (offline) */
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
+</script>
+</body>
+</html>

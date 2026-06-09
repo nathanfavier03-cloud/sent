@@ -1,0 +1,16 @@
+{
+  "name": "ChecklistItem",
+  "type": "object",
+  "properties": {
+    "country_code": { "type": "string" },
+    "category": {
+      "type": "string",
+      "enum": ["health", "documents", "packing", "safety", "logistics"]
+    },
+    "task": { "type": "string" },
+    "detail": { "type": "string" },
+    "order": { "type": "number" },
+    "is_template": { "type": "boolean", "description": "True for the starter template items shared across users" }
+  },
+  "required": ["task"]
+}
