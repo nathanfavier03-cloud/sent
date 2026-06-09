@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
-<meta name="theme-color" content="#0a1628" />
+<meta name="theme-color" content="#0c0e16" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Sent" />
@@ -12,62 +12,71 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml" />
 <title>Sent — Favier's Lighthouse</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap');
 :root{
-  --bg:#0a1628; --bg2:#0d1c33; --card:#13294a; --card2:#172f54;
-  --line:rgba(255,255,255,.08);
-  --text:#eaf0f8; --muted:#92a6c6; --faint:#5d7298;
-  --gold:#f5b945; --gold-2:#ffd27a; --gold-soft:rgba(245,185,69,.14);
-  --beam:linear-gradient(135deg,#ffd27a,#f5b945);
+  /* Favier's Lighthouse — deep navy / warm cream / bronze-amber (matches NLC design system) */
+  --bg:#0c0e16; --bg2:#11141f; --card:#131722; --card2:#181c28;
+  --line:#242838;
+  --text:#f3efe6; --muted:#9b968c; --faint:#6b7184;
+  --gold:#d98a3d; --gold-2:#eaa85c; --gold-soft:rgba(201,124,46,.15);
+  --beam:linear-gradient(135deg,#e3a24f,#c97c2e);
+  --glow:0 0 20px rgba(201,124,46,.16), 0 0 40px rgba(201,124,46,.06);
   --good:#46c08a; --bad:#e9657b;
+  --radius:0.75rem;
   --safe-b:env(safe-area-inset-bottom); --safe-t:env(safe-area-inset-top);
   --nav-h:64px;
 }
 @media (prefers-color-scheme: light){
   :root.auto{
-    --bg:#eef3fb; --bg2:#e6edf8; --card:#ffffff; --card2:#f5f8fe;
-    --line:rgba(10,22,40,.10);
-    --text:#0a1628; --muted:#54678a; --faint:#8093b3;
-    --gold-soft:rgba(245,185,69,.20);
+    --bg:#f6f1e8; --bg2:#efe8db; --card:#ffffff; --card2:#faf7f1;
+    --line:#d6dae4;
+    --text:#161a2b; --muted:#5b6479; --faint:#8a92a6;
+    --gold:#b0712b; --gold-2:#c97c2e; --gold-soft:rgba(201,124,46,.16);
+    --beam:linear-gradient(135deg,#d18b3a,#b87328);
+    --glow:0 0 20px rgba(201,124,46,.12), 0 0 36px rgba(201,124,46,.05);
   }
 }
 :root.light{
-  --bg:#eef3fb; --bg2:#e6edf8; --card:#ffffff; --card2:#f5f8fe;
-  --line:rgba(10,22,40,.10);
-  --text:#0a1628; --muted:#54678a; --faint:#8093b3;
-  --gold-soft:rgba(245,185,69,.20);
+  --bg:#f6f1e8; --bg2:#efe8db; --card:#ffffff; --card2:#faf7f1;
+  --line:#d6dae4;
+  --text:#161a2b; --muted:#5b6479; --faint:#8a92a6;
+  --gold:#b0712b; --gold-2:#c97c2e; --gold-soft:rgba(201,124,46,.16);
+  --beam:linear-gradient(135deg,#d18b3a,#b87328);
+  --glow:0 0 20px rgba(201,124,46,.12), 0 0 36px rgba(201,124,46,.05);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;height:100%;height:-webkit-fill-available}
 body{
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,system-ui,sans-serif;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
   background:
-    radial-gradient(1200px 600px at 80% -10%, rgba(245,185,69,.10), transparent 60%),
-    radial-gradient(900px 500px at -10% 10%, rgba(70,120,200,.12), transparent 55%),
+    radial-gradient(1100px 560px at 85% -12%, rgba(201,124,46,.10), transparent 60%),
+    radial-gradient(820px 460px at -12% 8%, rgba(201,124,46,.05), transparent 55%),
     var(--bg);
-  color:var(--text); overflow:hidden; -webkit-font-smoothing:antialiased;
+  color:var(--text); overflow:hidden; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
 }
 #app{height:100vh;height:-webkit-fill-available;display:flex;flex-direction:column;max-width:520px;margin:0 auto;position:relative}
 .scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(var(--safe-t) + 14px) 18px calc(var(--nav-h) + var(--safe-b) + 22px)}
 .center{justify-content:center}
 
-/* type */
-h1,h2,h3{margin:0;line-height:1.15;letter-spacing:-.02em}
-h1{font-size:30px;font-weight:800}
-h2{font-size:21px;font-weight:750}
-h3{font-size:16px;font-weight:700}
+/* type — Playfair Display headings, Inter body (Lighthouse system) */
+h1,h2{margin:0;line-height:1.15;letter-spacing:-.01em;font-family:'Playfair Display',Georgia,serif}
+h1{font-size:30px;font-weight:600}
+h2{font-size:21px;font-weight:600}
+h3{margin:0;line-height:1.2;font-size:16px;font-weight:600;letter-spacing:-.01em}
 p{margin:0;line-height:1.5;color:var(--muted)}
-.small{font-size:13px}.tiny{font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);font-weight:700}
+.small{font-size:13px}.tiny{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-weight:600}
 .gold{color:var(--gold)}.muted{color:var(--muted)}
 
 /* brand */
-.brand{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.01em}
-.brand .bk{font-size:12px;color:var(--faint);font-weight:600;letter-spacing:.02em}
+.brand{display:flex;align-items:center;gap:9px;font-weight:600;letter-spacing:-.01em;font-family:'Playfair Display',Georgia,serif}
+.brand .bk{font-size:11px;color:var(--faint);font-weight:500;letter-spacing:.04em;font-family:'Inter',sans-serif;text-transform:uppercase}
 .lh{width:30px;height:30px;flex:none;display:grid;place-items:center;border-radius:9px;background:var(--gold-soft)}
 .lh svg{width:18px;height:18px}
 
 /* cards */
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:12px 0;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin:12px 0;box-shadow:0 4px 18px rgba(0,0,0,.14)}
 .card.tap{cursor:pointer;transition:transform .12s ease, border-color .12s}
+.card.tap:hover{border-color:color-mix(in srgb,var(--gold) 38%,var(--line))}
 .card.tap:active{transform:scale(.985)}
 .row{display:flex;align-items:center;gap:12px}
 .between{justify-content:space-between}
@@ -75,7 +84,7 @@ p{margin:0;line-height:1.5;color:var(--muted)}
 .grow{flex:1;min-width:0}
 
 /* buttons */
-.btn{appearance:none;border:none;width:100%;padding:15px 18px;border-radius:14px;font-size:16px;font-weight:750;color:#1a1205;background:var(--beam);cursor:pointer;transition:transform .1s, opacity .2s;box-shadow:0 8px 20px rgba(245,185,69,.28)}
+.btn{appearance:none;border:none;width:100%;padding:15px 18px;border-radius:14px;font-size:16px;font-weight:600;color:#fff;background:var(--beam);cursor:pointer;transition:transform .1s, opacity .2s;box-shadow:0 6px 18px rgba(201,124,46,.26)}
 .btn:active{transform:translateY(1px) scale(.99)}
 .btn:disabled{opacity:.4;box-shadow:none}
 .btn.sec{background:transparent;color:var(--text);border:1px solid var(--line);box-shadow:none}
@@ -103,7 +112,7 @@ label.fl{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:
 
 /* flashcard */
 .flash{min-height:230px;display:flex;flex-direction:column;justify-content:center;text-align:center;gap:10px}
-.fr{font-size:30px;font-weight:800;letter-spacing:-.02em}
+.fr{font-size:30px;font-weight:600;letter-spacing:-.01em;font-family:'Playfair Display',Georgia,serif}
 .pron{font-size:15px;color:var(--gold);font-weight:650}
 .en{font-size:17px;color:var(--muted)}
 .speak{width:58px;height:58px;border-radius:50%;border:none;background:var(--gold-soft);color:var(--gold);font-size:24px;display:grid;place-items:center;margin:4px auto 0;cursor:pointer}
@@ -118,15 +127,15 @@ label.fl{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:
 .nav svg{width:23px;height:23px}
 
 /* misc */
-.beam-hero{position:relative;border-radius:20px;overflow:hidden;padding:22px;background:linear-gradient(160deg,#10254a,#0a1628);border:1px solid var(--line)}
-.beam-hero::after{content:"";position:absolute;top:-40%;right:-10%;width:220px;height:320px;background:conic-gradient(from 200deg at 70% 30%, transparent, rgba(245,185,69,.22), transparent 40%);filter:blur(6px)}
+.beam-hero{position:relative;border-radius:20px;overflow:hidden;padding:22px;background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);box-shadow:var(--glow)}
+.beam-hero::after{content:"";position:absolute;top:-40%;right:-10%;width:220px;height:320px;background:conic-gradient(from 200deg at 70% 30%, transparent, rgba(201,124,46,.22), transparent 40%);filter:blur(6px)}
 .stat{flex:1;min-width:96px;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:12px}
 .stat b{font-size:22px;display:block;letter-spacing:-.02em}
 .fade{animation:fade .35s ease}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
 .globe{width:160px;height:160px;margin:6px auto;border-radius:50%;display:grid;place-items:center;font-size:74px;
-  background:radial-gradient(circle at 35% 30%, #1d3a66, #0a1628);border:1px solid var(--line);position:relative;filter:grayscale(.5) brightness(.8)}
-.globe.lit{filter:none;box-shadow:0 0 0 4px var(--gold-soft),0 0 40px rgba(245,185,69,.4)}
+  background:radial-gradient(circle at 35% 30%, #1b2436, #0c0e16);border:1px solid var(--line);position:relative;filter:grayscale(.55) brightness(.82)}
+.globe.lit{filter:none;box-shadow:0 0 0 4px var(--gold-soft),0 0 40px rgba(201,124,46,.4)}
 .globe .pin{position:absolute;font-size:24px;top:42px;left:78px;opacity:.4}
 .globe.lit .pin{opacity:1;animation:pop .5s ease}
 @keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.3)}100%{transform:scale(1)}}
@@ -135,6 +144,18 @@ label.fl{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:
 .toast{position:absolute;left:50%;top:calc(var(--safe-t) + 12px);transform:translateX(-50%);background:var(--card);border:1px solid var(--gold);color:var(--gold);
   padding:10px 16px;border-radius:12px;font-weight:750;font-size:14px;z-index:50;box-shadow:0 10px 30px rgba(0,0,0,.4);animation:fade .3s}
 a{color:var(--gold)}
+
+/* ---- Lighthouse design-system refinements (override layer) ---- */
+.nav button{border-radius:12px;margin:7px 5px;padding:6px 0;transition:background .2s,color .2s}
+.nav button.on{background:var(--gold-soft)}
+.beam-hero::after{background:conic-gradient(from 200deg at 70% 30%, transparent, rgba(201,124,46,.30), transparent 42%)}
+.globe.lit{box-shadow:0 0 0 4px var(--gold-soft),0 0 40px rgba(201,124,46,.45)}
+.toast{font-weight:600;border-radius:12px}
+.btn{border-radius:12px}
+.pill{font-weight:700;letter-spacing:.05em}
+.chip{font-weight:550}
+.ring>div{font-family:'Inter',sans-serif}
+::selection{background:var(--gold-soft)}
 </style>
 </head>
 <body>
@@ -342,7 +363,7 @@ function applyTheme(){
 }
 
 /* ---- Lighthouse icon ---- */
-const LH=`<span class="lh"><svg viewBox="0 0 24 24" fill="none"><path d="M9 21h6l-1-9H10l-1 9z" fill="#f5b945"/><path d="M10.5 12h3l-.4-3h-2.2l-.4 3z" fill="#ffd27a"/><circle cx="12" cy="6.5" r="2.3" fill="#ffd27a"/><path d="M14.3 6.5l5-2M14.3 6.5l5 2M9.7 6.5l-5-2M9.7 6.5l-5 2" stroke="#f5b945" stroke-width="1.3" stroke-linecap="round"/></svg></span>`;
+const LH=`<span class="lh"><svg viewBox="0 0 24 24" fill="none"><path d="M9 21h6l-1-9H10l-1 9z" fill="#c97c2e"/><path d="M10.5 12h3l-.4-3h-2.2l-.4 3z" fill="#e3a24f"/><circle cx="12" cy="6.5" r="2.3" fill="#e3a24f"/><path d="M14.3 6.5l5-2M14.3 6.5l5 2M9.7 6.5l-5-2M9.7 6.5l-5 2" stroke="#c97c2e" stroke-width="1.3" stroke-linecap="round"/></svg></span>`;
 function header(sub){ return `<div class="row between" style="margin-bottom:6px">
   <div class="brand">${LH}<div>Sent<div class="bk">Favier’s Lighthouse</div></div></div>
   <button class="chip" onclick="cycleTheme()">${S.theme==='light'?'☀️':S.theme==='dark'?'🌙':'🌗'} Theme</button>
