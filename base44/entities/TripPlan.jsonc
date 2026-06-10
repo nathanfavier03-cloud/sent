@@ -9,6 +9,9 @@
     "departure_date": { "type": "string", "format": "date", "description": "Empty if no trip planned yet" },
     "no_trip_planned": { "type": "boolean", "default": false },
     "per_day": { "type": "number", "description": "Lessons scheduled per day, derived from runway" },
+    "target_ready_date": { "type": "string", "format": "date", "description": "Date the track should finish, ~3 days before departure (back-planning)" },
+    "daily_minutes_cap": { "type": "number", "default": 5, "description": "Target finishable daily session length in minutes" },
+    "pace_status": { "type": "string", "enum": ["ahead", "on_pace", "behind"], "description": "Snapshot of whether the user is keeping pace with the back-plan" },
     "generated_at": { "type": "string", "format": "date-time" }
   },
   "required": ["country_code", "language_code"]

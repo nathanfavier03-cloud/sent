@@ -1,0 +1,19 @@
+{
+  "name": "GospelStep",
+  "type": "object",
+  "properties": {
+    "language_code": { "type": "string" },
+    "country_code": { "type": "string" },
+    "order": { "type": "number", "description": "Step order in the presentation" },
+    "title_en": { "type": "string" },
+    "title_fr": { "type": "string" },
+    "scripture_ref": { "type": "string", "description": "e.g. Jean 3:16" },
+    "scripture_fr": { "type": "string" },
+    "scripture_en": { "type": "string" },
+    "body_en": { "type": "string", "description": "Short explanation in English" },
+    "body_fr": { "type": "string", "description": "Short explanation in French (parallel/side-by-side view)" },
+    "guiding_question_en": { "type": "string" },
+    "guiding_question_fr": { "type": "string" }
+  },
+  "required": ["order", "title_en"]
+}

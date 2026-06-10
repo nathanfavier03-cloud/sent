@@ -9,7 +9,8 @@
     "english_text": { "type": "string" },
     "translation": { "type": "string", "description": "e.g. Louis Segond" },
     "theme": { "type": "string" },
-    "audio_url": { "type": "string" }
+    "audio_url": { "type": "string", "description": "TTS or fallback audio" },
+    "audio_native_url": { "type": "string", "description": "Recorded native-speaker audio (preferred when present)" }
   },
   "required": ["language_code", "reference", "target_text"]
 }

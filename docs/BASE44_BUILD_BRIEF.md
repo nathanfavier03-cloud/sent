@@ -59,6 +59,40 @@ full, sourced content and **the verified stats + sources**.
 
 ---
 
+## Greenlit enhancements (research-driven, 2026-06-09)
+From a competitive scan (GodTools, YouVersion, Hallow, Duolingo, Memrise, Pimsleur, Joshua Project,
+Open Doors, CultureMee, IMB/YWAM). The differentiator: **Sent is pre-field and deadline-driven** —
+no competitor combines a trip deadline with a back-planned curriculum.
+
+**Build into Phase 1:**
+1. **Departure back-planning** *(core differentiator)* — from the trip date, set `TripPlan.target_ready_date`
+   ≈ departure − 3 days and pace the track to finish by then. Home shows a **pace status** ("on pace" /
+   "behind") so the countdown drives the whole loop. (`TripPlan.target_ready_date`, `pace_status`, `daily_minutes_cap`.)
+2. **Spaced repetition (SM-2)** — phrases/verses get review nodes surfaced *just before forgetting*, baked
+   into the daily path (not a separate chore). Fields on `Progress`: `ef` (ease, default 2.5),
+   `interval_days`, `repetitions`, `due_date`, `lapses`, `quality_last`. Algorithm in DAILY_TRACK_LOGIC.md.
+3. **Interactive Gospel presentation** (GodTools-style) — a swipeable French/English **parallel** gospel
+   walk-through the user can actually present. Entity `GospelStep` (5 seeded steps for France: God's love →
+   sin → Jesus → receive → prayer), each with `scripture_fr/en`, `body_fr/en`, `guiding_question_fr/en`.
+4. **Native audio + "say it out loud"** — prefer recorded native-speaker audio (`audio_native_url` on
+   Phrase/Verse; TTS `fr-FR` as fallback). Add a Pimsleur-style active-recall mode: prompt in English →
+   user says the French aloud (mic optional) → reveal.
+5. **Streak-freeze + ~5-min cap** — `User.streak_freezes` (default 2) protects the streak on a missed day;
+   `User.daily_goal_minutes` (default 5) keeps each session finishable (Drops/Duolingo loss-aversion).
+6. **Culture as scenario cards** — `Scenario` entity (5 seeded for France: greeting, dining, faith-talk,
+   public, conversation), each a situation + do/don't + tip. Replaces bullet-list culture tips.
+7. **Daily "Pray for France" card** — `PrayerPrompt` entity (7 seeded), one dated prayer surfaced on the
+   home screen each day (Unreached-of-the-Day ritual).
+8. **Joshua Project–sourced briefing** — the Country briefing should cite **Joshua Project / Operation World**
+   for France's % evangelical, primary religion, and top unreached groups (sourced, not hand-wavy).
+
+## Monetization (decision: free / donation)
+**Sent is free for everyone, ministry/donor-funded** (the YouVersion model) — maximizes reach and fits the
+reality that team members are already fundraising. No paywalls on the France track or any core feature.
+Optional later: a non-blocking "support this ministry" / donate prompt, and faith-tech grants/hackathons
+(Gloo, Indigitous "AI & the Church") for build-out funding. *(Per-trip church licensing was considered and
+declined in favor of free access.)*
+
 ## Out of scope for Phase 1 (deferred)
 - **Phase 2:** conversation simulator (LLM roleplay), pronunciation feedback, teams/leaderboard,
   field journal, shareable commissioning certificate.

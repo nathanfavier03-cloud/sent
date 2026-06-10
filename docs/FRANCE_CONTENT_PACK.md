@@ -89,3 +89,30 @@ Safety (emergency 112, U.S. Embassy Paris, register with STEP).
 
 ## 8. Commissioning
 End-of-track screen: *"Préparé(e) et envoyé(e) en France"* over **Jean 20:21**.
+
+## 9. Interactive Gospel Presentation (French / English parallel)
+A swipeable, GodTools-style walk-through the user can actually present to a French person — each step
+shows the French and English side by side, with a guiding question. Seeded as `GospelStep` (track FR):
+1. **Dieu vous aime et offre un plan pour votre vie** — Jean 3:16 — "Did you know God loves you personally?"
+2. **Nous sommes séparés de Dieu par le péché** — Romains 3:23 — "Does that ring true in your own life?"
+3. **Jésus est la solution de Dieu pour notre péché** — Romains 5:8 — "Have you heard why Jesus had to die?"
+4. **Chacun doit recevoir Jésus** — Jean 1:12 — "Is anything keeping you from trusting him today?"
+5. **Une prière pour recevoir Christ** — Romains 10:9 — a simple French prayer of faith.
+
+## 10. Culture Scenario Cards
+Situational do's/don'ts (`Scenario` entity) instead of a bullet list:
+- **You meet someone for the first time** — Bonjour first, handshake, "vous"; don't hug or use "tu" uninvited.
+- **Invited to dinner** — bring a small gift, arrive ~15 min late, settle in; don't rush or arrive early.
+- **Someone asks why you believe** — share your story, stay warm, ask questions; don't preach or debate.
+- **Entering a shop/café** — "Bonjour" in, "Au revoir" out, voice low; don't be loud or skip the greeting.
+- **A conversation turns deep** — keep it one-to-one; don't street-preach (breaks laïcité norms).
+
+## 11. Daily Prayer Prompts
+One surfaced per day on the home screen (`PrayerPrompt`, 7 seeded): spiritual apathy · the ~1% remnant ·
+nominal→living faith · French youth · the nations within (Muslim population) · against intellectual pride ·
+your own boldness on the trip.
+
+## 12. Sourcing note (Joshua Project / Operation World)
+The briefing stats should be cross-checked and expanded with **Joshua Project** (% evangelical, primary
+religion, top unreached people groups) and **Operation World** per-country prayer items before launch.
+Current figures: Pew, CNEF, Open Doors (see §1).

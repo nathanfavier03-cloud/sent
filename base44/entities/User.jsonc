@@ -12,6 +12,8 @@
     "current_track": { "type": "string", "description": "Active track code, e.g. fr-FR" },
     "xp": { "type": "number", "default": 0, "description": "Total experience points earned" },
     "streak": { "type": "number", "default": 0, "description": "Current daily streak" },
-    "last_active_date": { "type": "string", "format": "date", "description": "Last day the user completed a lesson (streak bookkeeping)" }
+    "last_active_date": { "type": "string", "format": "date", "description": "Last day the user completed a lesson (streak bookkeeping)" },
+    "streak_freezes": { "type": "number", "default": 2, "description": "Streak-freeze tokens that protect the streak on a missed day" },
+    "daily_goal_minutes": { "type": "number", "default": 5, "description": "Daily session goal (finishable ~5-min cap)" }
   }
 }

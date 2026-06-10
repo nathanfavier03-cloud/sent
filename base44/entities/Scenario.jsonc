@@ -1,0 +1,18 @@
+{
+  "name": "Scenario",
+  "type": "object",
+  "properties": {
+    "country_code": { "type": "string" },
+    "order": { "type": "number" },
+    "category": {
+      "type": "string",
+      "enum": ["dining", "greeting", "conversation", "public", "faith_talk"]
+    },
+    "situation": { "type": "string", "description": "The scenario prompt, e.g. 'You're invited to dinner'" },
+    "prompt": { "type": "string", "description": "What to consider / the question it poses" },
+    "do_text": { "type": "string", "description": "What to do" },
+    "dont_text": { "type": "string", "description": "What to avoid" },
+    "tip": { "type": "string" }
+  },
+  "required": ["situation"]
+}

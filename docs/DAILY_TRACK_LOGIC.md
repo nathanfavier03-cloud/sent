@@ -41,6 +41,48 @@ Day 1 leads with the briefing; final day is the commission.
 Phrase 10 · Verse 15 · Culture 15 · Teaching 20 · Briefing 25 · Prayer 5 · Commission 50.
 Completing a full day → streak +1. Miss a day → streak resets, track persists, overdue lessons surface.
 
+## Departure back-planning (the differentiator)
+The trip date drives everything. Set a **target ready date** a few days before departure so the user is
+prepared with margin, then pace toward it:
+```
+targetReady = departureDate − 3 days          // finish with buffer, not at the gate
+plannedPerDay = ceil(remainingLessons / max(1, businessDaysUntil(targetReady)))
+expectedDoneByToday = lessonsScheduledUpToToday(targetReady)
+paceStatus = completed >= expectedDoneByToday ? "on_pace"
+           : completed >= expectedDoneByToday - plannedPerDay ? "slightly_behind"
+           : "behind"
+```
+Home screen surfaces it: *"12 days left · you're on pace"* or *"behind — 3 lessons to catch up."*
+Stored on `TripPlan` as `target_ready_date`, `daily_minutes_cap` (default 5), `pace_status`.
+
+## Spaced repetition (SM-2) for phrases & verses
+Each phrase/verse the user has learned becomes a review item with an SM-2 record on `Progress`.
+On review, the user self-rates recall **q (0–5)**; update:
+```
+if q < 3:                      // forgotten — relearn
+  repetitions = 0
+  interval = 1
+  lapses += 1
+else:
+  if repetitions == 0: interval = 1
+  elif repetitions == 1: interval = 6
+  else: interval = round(interval * ef)
+  repetitions += 1
+ef = max(1.3, ef + (0.1 − (5 − q) * (0.08 + (5 − q) * 0.02)))   // ease factor
+due_date = today + interval days
+```
+Items whose `due_date <= today` are folded into the day's set as **review nodes** (not a separate screen),
+capped so the daily session still fits `daily_minutes_cap`. New material is throttled when reviews pile up.
+
+## Retention mechanics
+- **Streak** +1 on completing the day's set. **Streak-freeze** (`User.streak_freezes`, default 2) auto-spends
+  to protect the streak on one missed day before it resets (Duolingo/Drops loss-aversion).
+- **~5-min cap** (`User.daily_goal_minutes`) keeps each day finishable — scarcity makes it a treat, not a chore.
+
+## Daily home screen also shows
+- The **pace status** (above) and the countdown.
+- One **daily "Pray for France" card** (`PrayerPrompt`, rotated by `order`).
+
 ## Completion
 Finishing every lesson lights up France on the globe and unlocks the
 **"Préparé(e) et envoyé(e) en France"** commissioning (Jean 20:21).

@@ -11,7 +11,8 @@
       "enum": ["greeting", "gospel", "prayer", "question", "blessing", "courtesy"]
     },
     "usefulness_rank": { "type": "number", "description": "1 = most useful for evangelism" },
-    "audio_url": { "type": "string" }
+    "audio_url": { "type": "string", "description": "TTS or fallback audio" },
+    "audio_native_url": { "type": "string", "description": "Recorded native-speaker audio (preferred when present)" }
   },
   "required": ["language_code", "english", "target_text"]
 }

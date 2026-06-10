@@ -1,0 +1,16 @@
+{
+  "name": "PrayerPrompt",
+  "type": "object",
+  "properties": {
+    "country_code": { "type": "string" },
+    "order": { "type": "number", "description": "Rotation order for the daily prayer card" },
+    "title": { "type": "string" },
+    "text": { "type": "string" },
+    "focus": {
+      "type": "string",
+      "enum": ["strongholds", "persecution", "breakthrough", "remnant", "youth", "self"],
+      "description": "Prayer focus theme"
+    }
+  },
+  "required": ["text"]
+}
