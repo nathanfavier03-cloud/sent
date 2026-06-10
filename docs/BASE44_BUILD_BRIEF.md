@@ -86,6 +86,20 @@ no competitor combines a trip deadline with a back-planned curriculum.
 8. **Joshua Project–sourced briefing** — the Country briefing should cite **Joshua Project / Operation World**
    for France's % evangelical, primary religion, and top unreached groups (sourced, not hand-wavy).
 
+## Deep teaching content (research-driven, 2026-06-10) — see GOSPEL_FRAMEWORKS.md
+Reusable, language-agnostic evangelism content, all in **public-domain** translations:
+- **6 gospel-presentation frameworks** (Romans Road, Four Spiritual Laws, Bridge to Life, Three Circles,
+  ABCs, 1-Verse) as `GospelFramework` + `GospelFrameworkStep`, each tagged with *when to use it* so a
+  missionary picks the right tool for the person (oral/simple vs intellectual vs secular/broken).
+- **Multilingual verse store** `VerseTranslation` — the "Romans Road in different languages": one row per
+  reference × language (KJV/en, LSG/fr, RVA/es, JFA/pt). Framework steps reference verses by `scripture_ref`
+  and render text in the user's chosen language. *(Note the Romans 8:1 textual-variant flag in the doc.)*
+- **12 deeper teaching lessons** seeded as `Lesson` with **`track_code: "core"`** (testimony, transitions,
+  asking questions, handling rejection, the Spirit's role, invitation, follow-up, cross-cultural comms, …).
+- **Track composition:** a user's full track = **core teaching lessons ∪ the country track** (`fr-FR`).
+  `core` is universal/reusable; country tracks hold language/culture/briefing specifics. Build the app to
+  merge them.
+
 ## Monetization (decision: free / donation)
 **Sent is free for everyone, ministry/donor-funded** (the YouVersion model) — maximizes reach and fits the
 reality that team members are already fundraising. No paywalls on the France track or any core feature.

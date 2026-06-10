@@ -1,0 +1,17 @@
+{
+  "name": "GospelFramework",
+  "type": "object",
+  "properties": {
+    "slug": { "type": "string", "description": "Stable key, e.g. romans_road" },
+    "name": { "type": "string" },
+    "summary": { "type": "string" },
+    "origin": { "type": "string", "description": "Who created it / tradition" },
+    "when_to_use": { "type": "string", "description": "What context this tool fits best" },
+    "audience_tags": { "type": "array", "items": { "type": "string" }, "description": "e.g. oral, simple, intellectual, secular, visual" },
+    "key_verses": { "type": "array", "items": { "type": "string" }, "description": "Reference list used by this framework" },
+    "step_count": { "type": "number" },
+    "order": { "type": "number" },
+    "source_url": { "type": "string" }
+  },
+  "required": ["slug", "name"]
+}

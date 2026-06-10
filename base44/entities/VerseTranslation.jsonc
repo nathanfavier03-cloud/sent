@@ -1,0 +1,12 @@
+{
+  "name": "VerseTranslation",
+  "type": "object",
+  "properties": {
+    "reference": { "type": "string", "description": "English-style reference key, e.g. Romans 6:23" },
+    "language_code": { "type": "string", "description": "e.g. en, fr, es, pt" },
+    "translation_name": { "type": "string", "description": "Public-domain version, e.g. KJV, LSG, RVA, JFA" },
+    "text": { "type": "string", "description": "Exact verse text" },
+    "is_public_domain": { "type": "boolean", "default": true }
+  },
+  "required": ["reference", "language_code", "text"]
+}

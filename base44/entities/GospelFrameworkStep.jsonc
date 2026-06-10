@@ -1,0 +1,13 @@
+{
+  "name": "GospelFrameworkStep",
+  "type": "object",
+  "properties": {
+    "framework_slug": { "type": "string" },
+    "order": { "type": "number" },
+    "title": { "type": "string" },
+    "teaching_point": { "type": "string", "description": "What this step communicates" },
+    "scripture_ref": { "type": "string", "description": "Reference; text comes from VerseTranslation by ref + language" },
+    "key_idea": { "type": "string", "description": "One-line takeaway / how to say it" }
+  },
+  "required": ["framework_slug", "order"]
+}
