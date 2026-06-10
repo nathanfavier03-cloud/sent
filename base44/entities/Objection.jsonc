@@ -1,0 +1,16 @@
+{
+  "name": "Objection",
+  "type": "object",
+  "properties": {
+    "country_code": { "type": "string" },
+    "tag": { "type": "string", "description": "Stable key, e.g. private_faith" },
+    "label": { "type": "string" },
+    "prompt_fr": { "type": "string", "description": "How a local might say it, in French" },
+    "prompt_en": { "type": "string" },
+    "why_it_comes_up": { "type": "string", "description": "Cultural reason this objection is common" },
+    "good_response_note": { "type": "string", "description": "Coaching: how to respond well" },
+    "related_verse_ref": { "type": "string" },
+    "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] }
+  },
+  "required": ["tag"]
+}

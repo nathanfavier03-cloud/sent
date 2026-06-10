@@ -1,0 +1,20 @@
+{
+  "name": "RoleplayPersona",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "country_code": { "type": "string" },
+    "language_code": { "type": "string" },
+    "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] },
+    "openness": { "type": "number", "description": "0 (closed/hostile) to 100 (open/seeking)" },
+    "age_bracket": { "type": "string" },
+    "background": { "type": "string", "description": "Who they are, short bio" },
+    "worldview": { "type": "string", "description": "Their spiritual/philosophical stance" },
+    "persona_prompt": { "type": "string", "description": "System-prompt seed describing how the AI should play this character" },
+    "avatar_emoji": { "type": "string" },
+    "top_objections": { "type": "array", "items": { "type": "string" }, "description": "Objection tags this persona tends to raise" },
+    "opening_line_fr": { "type": "string" },
+    "opening_line_en": { "type": "string" }
+  },
+  "required": ["name"]
+}

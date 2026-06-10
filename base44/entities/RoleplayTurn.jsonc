@@ -1,0 +1,14 @@
+{
+  "name": "RoleplayTurn",
+  "type": "object",
+  "properties": {
+    "session_id": { "type": "string" },
+    "order": { "type": "number" },
+    "role": { "type": "string", "enum": ["local", "user", "coach"] },
+    "text_fr": { "type": "string" },
+    "text_en": { "type": "string", "description": "Translation / gloss for bilingual mode" },
+    "objection_tag": { "type": "string", "description": "Set when the local raised a known objection" },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "required": ["session_id", "role"]
+}

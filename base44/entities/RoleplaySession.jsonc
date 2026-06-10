@@ -1,0 +1,20 @@
+{
+  "name": "RoleplaySession",
+  "type": "object",
+  "properties": {
+    "user_id": { "type": "string" },
+    "persona_id": { "type": "string" },
+    "country_code": { "type": "string" },
+    "language_code": { "type": "string" },
+    "mode": { "type": "string", "enum": ["french", "bilingual", "english"], "description": "Language difficulty of the practice" },
+    "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] },
+    "status": { "type": "string", "enum": ["active", "completed", "abandoned"], "default": "active" },
+    "outcome": { "type": "string", "enum": ["shared_full_gospel", "partial", "they_left", "user_ended"] },
+    "started_at": { "type": "string", "format": "date-time" },
+    "ended_at": { "type": "string", "format": "date-time" },
+    "turn_count": { "type": "number", "default": 0 },
+    "xp_earned": { "type": "number", "default": 0 },
+    "score_overall": { "type": "number" }
+  },
+  "required": ["persona_id"]
+}

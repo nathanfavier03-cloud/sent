@@ -1,0 +1,20 @@
+{
+  "name": "RoleplayFeedback",
+  "type": "object",
+  "properties": {
+    "session_id": { "type": "string" },
+    "user_id": { "type": "string" },
+    "score_overall": { "type": "number", "description": "0-100" },
+    "score_clarity": { "type": "number", "description": "Clarity of the gospel shared" },
+    "score_warmth": { "type": "number", "description": "Relational warmth / listening" },
+    "score_objections": { "type": "number", "description": "Handling objections" },
+    "score_cultural": { "type": "number", "description": "Cultural sensitivity (laicite, respect)" },
+    "score_language": { "type": "number", "description": "French language accuracy" },
+    "summary": { "type": "string" },
+    "strengths": { "type": "array", "items": { "type": "string" } },
+    "growth": { "type": "array", "items": { "type": "string" } },
+    "phrase_corrections": { "type": "array", "items": { "type": "string" }, "description": "Specific French phrasing fixes" },
+    "practice_next": { "type": "array", "items": { "type": "string" }, "description": "Lesson/Phrase/Verse ids to review next" }
+  },
+  "required": ["session_id"]
+}

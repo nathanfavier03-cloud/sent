@@ -94,8 +94,9 @@ Optional later: a non-blocking "support this ministry" / donate prompt, and fait
 declined in favor of free access.)*
 
 ## Out of scope for Phase 1 (deferred)
-- **Phase 2:** conversation simulator (LLM roleplay), pronunciation feedback, teams/leaderboard,
-  field journal, shareable commissioning certificate.
+- **Phase 2:** **AI gospel-conversation roleplay** — fully spec'd in **AI_ROLEPLAY.md** (data model +
+  France personas/objections already seeded; build deferred to Phase 2). Plus: pronunciation feedback,
+  teams/leaderboard, field journal, shareable commissioning certificate.
 - **Phase 3:** full offline, multi-church/org admin accounts, live data feeds
   (Joshua Project / Open Doors / Operation World).
 
