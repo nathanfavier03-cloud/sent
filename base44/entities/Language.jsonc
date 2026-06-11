@@ -7,7 +7,8 @@
     "code": { "type": "string", "description": "e.g. fr" },
     "region": { "type": "string" },
     "script": { "type": "string" },
-    "country_code": { "type": "string", "description": "Primary destination country code this language pairs to" }
+    "country_code": { "type": "string", "description": "Primary destination country code this language pairs to" },
+    "status": { "type": "string", "enum": ["published", "hold"], "default": "published", "description": "hold = not yet verified/ready; hidden from the live app" }
   },
   "required": ["name", "code"]
 }
