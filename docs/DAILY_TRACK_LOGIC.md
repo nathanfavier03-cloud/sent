@@ -55,24 +55,34 @@ paceStatus = completed >= expectedDoneByToday ? "on_pace"
 Home screen surfaces it: *"12 days left · you're on pace"* or *"behind — 3 lessons to catch up."*
 Stored on `TripPlan` as `target_ready_date`, `daily_minutes_cap` (default 5), `pace_status`.
 
-## Spaced repetition (SM-2) for phrases & verses
-Each phrase/verse the user has learned becomes a review item with an SM-2 record on `Progress`.
-On review, the user self-rates recall **q (0–5)**; update:
+## Spaced repetition — **FSRS** (upgraded from SM-2, 2026-06-12)
+Each learned phrase/verse becomes a review item with an FSRS record on `Progress`. FSRS (the algorithm now
+default in Anki) needs **~20–30% fewer reviews than SM-2** for the same retention and avoids SM-2's
+"ease hell" — ideal for a 5-minute daily cap. It models memory as **stability (S)** + **difficulty (D)**,
+and schedules each card for the moment its **retrievability** drops to the target retention (default 0.9).
+
+On review the user gives a 4-button rating — **1 Again · 2 Hard · 3 Good · 4 Easy** — and FSRS updates the
+card:
 ```
-if q < 3:                      // forgotten — relearn
-  repetitions = 0
-  interval = 1
-  lapses += 1
+R = exp(ln(0.9) * elapsed_days / S)          // current retrievability before the review
+if state == new:
+  D = D0(rating);  S = S0(rating)            // initial difficulty/stability from first rating
 else:
-  if repetitions == 0: interval = 1
-  elif repetitions == 1: interval = 6
-  else: interval = round(interval * ef)
-  repetitions += 1
-ef = max(1.3, ef + (0.1 − (5 − q) * (0.08 + (5 − q) * 0.02)))   // ease factor
-due_date = today + interval days
+  D = clamp(D - w6*(rating-3), 1, 10)        // difficulty drifts, mean-reverts (w7)
+  if rating == 1 (Again):
+     S = w11 * D^-w12 * ((S+1)^w13 - 1) * exp(w14*(1-R))   // post-lapse stability
+     lapses += 1; state = relearning
+  else:
+     S = S * (1 + exp(w8) * (11-D) * S^-w9 * (exp(w10*(1-R))-1) * hardPenalty * easyBonus)
+interval = S * ln(targetRetention) / ln(0.9)  // days until R hits target retention
+due_date = today + round(interval)
+reps += 1; elapsed_days, scheduled_days, last_review, last_rating recorded
 ```
-Items whose `due_date <= today` are folded into the day's set as **review nodes** (not a separate screen),
-capped so the daily session still fits `daily_minutes_cap`. New material is throttled when reviews pile up.
+*(w0..w16 are the FSRS weights; ship with the published defaults and optionally retrain per user later.)*
+Items whose `due_date <= today` fold into the day's set as **review nodes** (not a separate screen),
+capped so the session still fits `daily_minutes_cap`; new material is throttled when reviews pile up.
+Fields on `Progress`: `fsrs_state`, `fsrs_stability`, `fsrs_difficulty`, `due_date`, `last_review`, `reps`,
+`lapses`, `elapsed_days`, `scheduled_days`, `last_rating`.
 
 ## Retention mechanics
 - **Streak** +1 on completing the day's set. **Streak-freeze** (`User.streak_freezes`, default 2) auto-spends

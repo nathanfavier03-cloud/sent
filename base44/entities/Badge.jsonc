@@ -1,0 +1,15 @@
+{
+  "name": "Badge",
+  "type": "object",
+  "properties": {
+    "slug": { "type": "string", "description": "Stable key" },
+    "name": { "type": "string" },
+    "description": { "type": "string" },
+    "icon": { "type": "string", "description": "Emoji or icon key" },
+    "category": { "type": "string", "enum": ["milestone", "streak", "language", "gospel", "culture", "trip", "prayer"] },
+    "criteria": { "type": "string", "description": "Human-readable earn rule" },
+    "threshold": { "type": "number", "description": "Numeric threshold where relevant (e.g. streak days)" },
+    "order": { "type": "number" }
+  },
+  "required": ["slug", "name"]
+}

@@ -2,18 +2,18 @@
   "name": "User",
   "type": "object",
   "properties": {
-    "role": {
-      "type": "string",
-      "enum": ["admin", "user"],
-      "default": "user",
-      "description": "User role in the app"
-    },
+    "role": { "type": "string", "enum": ["admin", "user"], "default": "user", "description": "User role in the app" },
     "home_church": { "type": "string", "description": "The user's home or sending church" },
     "current_track": { "type": "string", "description": "Active track code, e.g. fr-FR" },
     "xp": { "type": "number", "default": 0, "description": "Total experience points earned" },
     "streak": { "type": "number", "default": 0, "description": "Current daily streak" },
-    "last_active_date": { "type": "string", "format": "date", "description": "Last day the user completed a lesson (streak bookkeeping)" },
-    "streak_freezes": { "type": "number", "default": 2, "description": "Streak-freeze tokens that protect the streak on a missed day" },
-    "daily_goal_minutes": { "type": "number", "default": 5, "description": "Daily session goal (finishable ~5-min cap)" }
+    "last_active_date": { "type": "string", "format": "date", "description": "Last day the user completed a lesson" },
+    "streak_freezes": { "type": "number", "default": 2, "description": "Streak-freeze tokens" },
+    "daily_goal_minutes": { "type": "number", "default": 5, "description": "Daily session goal (finishable ~5-min cap)" },
+
+    "reminder_opt_in": { "type": "boolean", "default": false, "description": "User opted in to daily reminders" },
+    "reminder_time": { "type": "string", "description": "Local time HH:MM for the daily training reminder" },
+    "notify_push": { "type": "boolean", "default": false, "description": "Send web-push reminders (PWA, iOS 16.4+ home-screen)" },
+    "notify_email": { "type": "boolean", "default": false, "description": "Send email reminders (reliable fallback for trip-critical alerts)" }
   }
 }

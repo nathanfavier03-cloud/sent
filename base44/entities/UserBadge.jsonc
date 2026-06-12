@@ -1,0 +1,15 @@
+{
+  "name": "UserBadge",
+  "type": "object",
+  "properties": {
+    "user_id": { "type": "string" },
+    "badge_slug": { "type": "string" },
+    "earned_date": { "type": "string", "format": "date-time" },
+    "progress": { "type": "number", "description": "0-100 toward earning, if not yet earned" }
+  },
+  "required": ["badge_slug"],
+  "rls": {
+    "read": { "created_by_id": "{{user.id}}" },
+    "write": { "created_by_id": "{{user.id}}" }
+  }
+}

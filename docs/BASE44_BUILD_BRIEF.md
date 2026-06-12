@@ -100,6 +100,31 @@ Reusable, language-agnostic evangelism content, all in **public-domain** transla
   `core` is universal/reusable; country tracks hold language/culture/briefing specifics. Build the app to
   merge them.
 
+## Engagement upgrades (research-driven, 2026-06-12)
+From a 2026 web scan (Duolingo, FSRS/Anki, ELSA/Talkio, YouVersion/Hallow, PWA push best practices).
+Data model is updated/seeded; build the UI for these in the next pass.
+
+1. **FSRS spaced repetition** (replaces SM-2) — `Progress` now carries FSRS fields (`fsrs_state`,
+   `fsrs_stability`, `fsrs_difficulty`, `due_date`, `reps`, `lapses`, `elapsed_days`, `scheduled_days`,
+   `last_rating`). Review uses a 4-button rating (Again/Hard/Good/Easy). ~20–30% fewer reviews than SM-2
+   for the same retention; no "ease hell". Algorithm in DAILY_TRACK_LOGIC.md.
+2. **Daily reminders (push + email)** — `User` now has `reminder_opt_in`, `reminder_time`, `notify_push`,
+   `notify_email`. Use **iOS 16.4+ home-screen PWA web push** for the daily nudge tied to the countdown
+   (*"France in 14 days — today's 5-min training is ready"*) + the daily prayer card. **Email is the
+   reliable fallback** (90–95% delivery, no install) for trip-critical alerts. Ask with a value-explaining
+   **pre-prompt**, not on first load.
+3. **Badges / achievements** — `Badge` catalog (13 seeded: First Steps, Week Warrior, Romans Road,
+   Gospel Ready, Culture Savvy, Packed & Ready, Prayer Warrior, Many Tongues, Sent, etc.) + per-user
+   `UserBadge`. Award on milestones/streaks/completions (YouVersion-style) to drive return visits. Show a
+   badges shelf on the Me screen and a celebratory toast on earn.
+4. **Pronunciation feedback** (upgrades "say it out loud") — use browser speech recognition (Web Speech
+   API `SpeechRecognition`, lang = the phrase's language_code) to score the user's spoken phrase vs.
+   `target_text`; store a `PronunciationAttempt` (recognized_text + 0–100 score). Flag weak words; 80+
+   earns the "Out Loud" badge. (Studies: ~15–20% intelligibility gain.)
+
+Onboarding polish (cheap, proven): let a visitor **tap+hear one phrase before signup** (immediate value),
+and ask one **personalization question** (their trip + their biggest fear about sharing) to tailor tone.
+
 ## Monetization (decision: free / donation)
 **Sent is free for everyone, ministry/donor-funded** (the YouVersion model) — maximizes reach and fits the
 reality that team members are already fundraising. No paywalls on the France track or any core feature.

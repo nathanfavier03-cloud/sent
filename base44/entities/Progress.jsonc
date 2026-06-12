@@ -9,13 +9,16 @@
     "xp_earned": { "type": "number", "default": 0 },
     "completed_date": { "type": "string", "format": "date-time" },
 
-    "ef": { "type": "number", "default": 2.5, "description": "SM-2 ease factor" },
-    "interval_days": { "type": "number", "default": 0, "description": "SM-2 current interval in days" },
-    "repetitions": { "type": "number", "default": 0, "description": "SM-2 consecutive successful reviews" },
-    "due_date": { "type": "string", "format": "date", "description": "Next review due date (SM-2)" },
-    "lapses": { "type": "number", "default": 0, "description": "Times this item was forgotten" },
-    "last_reviewed": { "type": "string", "format": "date-time" },
-    "quality_last": { "type": "number", "description": "Last recall quality 0-5 (SM-2)" }
+    "fsrs_state": { "type": "string", "enum": ["new", "learning", "review", "relearning"], "default": "new", "description": "FSRS card state" },
+    "fsrs_stability": { "type": "number", "description": "FSRS memory stability, in days" },
+    "fsrs_difficulty": { "type": "number", "description": "FSRS difficulty, 1-10" },
+    "due_date": { "type": "string", "format": "date", "description": "Next review due date" },
+    "last_review": { "type": "string", "format": "date-time" },
+    "reps": { "type": "number", "default": 0, "description": "Total reviews" },
+    "lapses": { "type": "number", "default": 0, "description": "Times forgotten (rated Again)" },
+    "elapsed_days": { "type": "number", "description": "Days since last review at last grading" },
+    "scheduled_days": { "type": "number", "description": "Interval FSRS scheduled at last grading" },
+    "last_rating": { "type": "number", "description": "Last review rating: 1 Again, 2 Hard, 3 Good, 4 Easy" }
   },
   "required": ["lesson_id"]
 }
