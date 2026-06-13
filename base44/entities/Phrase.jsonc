@@ -12,7 +12,8 @@
     },
     "usefulness_rank": { "type": "number", "description": "1 = most useful for evangelism" },
     "audio_url": { "type": "string", "description": "TTS or fallback audio" },
-    "audio_native_url": { "type": "string", "description": "Recorded native-speaker audio (preferred when present)" }
+    "audio_native_url": { "type": "string", "description": "Recorded native-speaker audio (preferred when present)" },
+    "mnemonic": { "type": "string", "description": "Optional memory hook / mnemonic shown on reveal (Memrise-style mem)" }
   },
   "required": ["language_code", "english", "target_text"]
 }

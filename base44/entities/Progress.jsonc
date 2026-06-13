@@ -18,7 +18,10 @@
     "lapses": { "type": "number", "default": 0, "description": "Times forgotten (rated Again)" },
     "elapsed_days": { "type": "number", "description": "Days since last review at last grading" },
     "scheduled_days": { "type": "number", "description": "Interval FSRS scheduled at last grading" },
-    "last_rating": { "type": "number", "description": "Last review rating: 1 Again, 2 Hard, 3 Good, 4 Easy" }
+    "last_rating": { "type": "number", "description": "Last review rating: 1 Again, 2 Hard, 3 Good, 4 Easy" },
+
+    "mastery_stage": { "type": "number", "default": 0, "description": "Recognition->production gradient: 0 recognize, 1 cued-recall, 2 produce/speak" },
+    "last_drill_type": { "type": "string", "enum": ["reveal", "match", "dictation", "cloze", "audio_mcq", "word_bank", "speak"], "description": "Which exercise format was last served for this item" }
   },
   "required": ["lesson_id"]
 }

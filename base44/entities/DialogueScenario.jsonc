@@ -1,0 +1,20 @@
+{
+  "name": "DialogueScenario",
+  "type": "object",
+  "properties": {
+    "country_code": { "type": "string" },
+    "language_code": { "type": "string" },
+    "slug": { "type": "string" },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "goal": { "type": "string", "description": "What the learner should accomplish" },
+    "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] },
+    "order": { "type": "number" },
+    "script": {
+      "type": "array",
+      "items": { "type": "object" },
+      "description": "Ordered turns. Each is either a line {turn, speaker (local|narrator), text_target, text_en} or a user choice-point {turn, speaker: 'user', choices: [{text_target, text_en, feedback, good}]}. Scripted on-ramp to the open AI roleplay."
+    }
+  },
+  "required": ["slug", "title"]
+}

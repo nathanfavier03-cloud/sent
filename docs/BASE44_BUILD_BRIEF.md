@@ -125,6 +125,37 @@ Data model is updated/seeded; build the UI for these in the next pass.
 Onboarding polish (cheap, proven): let a visitor **tap+hear one phrase before signup** (immediate value),
 and ask one **personalization question** (their trip + their biggest fear about sharing) to tailor tone.
 
+## Language-learning mechanics (research-driven, 2026-06-13)
+From a web study of Duolingo, Memrise, Babbel, Busuu, Pimsleur, Anki, etc. Sent already has the memory
+engine (FSRS), motivation (streaks/XP/badges), and speaking (ASR). These add **exercise variety, a
+production ladder, and pre-departure validation**. Data model updated/seeded; build the UI next.
+
+1. **Drill-type engine** (top pick) — every learned phrase cycles through formats, not just flashcard-reveal:
+   `reveal · match (tap pairs) · dictation (type what you hear) · cloze (fill-in-the-blank) · audio_mcq
+   (what do you hear?) · word_bank (tap scrambled words to build the sentence) · speak (ASR)`. FSRS serves
+   the *same* item a different way each time. Tokens for word-bank/cloze are derived at runtime (split
+   `target_text`; distractors sampled from other phrases of the same language) — no per-phrase authoring.
+   `Progress` now stores `last_drill_type` + `mastery_stage` (0 recognize → 1 cued-recall → 2 produce/speak;
+   FSRS promotes the stage as stability grows; only stage-2 triggers the ASR speak drill).
+2. **"Trouble Spots" weak-items mode** — a session over items with `lapses > 0` or low retrievability. No new
+   data (query FSRS). High payoff, near-zero effort.
+3. **Departure Readiness Check** — the mechanic most aligned with Sent's trip-deadline DNA: a mixed-drill quiz
+   over core phrases/verses/gospel/culture producing a *"% ready to share the Gospel in <lang>"* with a
+   per-section red/yellow/green. Auto-prompted by the countdown (e.g. 2 weeks out). New entity
+   **`ReadinessCheck`** stores results.
+4. **Scripted dialogue scenarios** — branching gospel-conversation scripts as the cheap on-ramp to (and
+   de-risking of) the open AI roleplay. New entity **`DialogueScenario`** (`script` = ordered turns; user
+   choice-points carry per-choice feedback + a `good` flag). **2 France scripts seeded** (street encounter,
+   "why do you believe?").
+5. **Minimal-pair pronunciation drills** — "hear the difference" MCQ then "say the right one" ASR for the
+   phoneme contrasts that make or break being understood. New entity **`MinimalPair`**; **6 French pairs
+   seeded** (péché/pêcher, vu/vous, poisson/poison, dessus/dessous, Dieu/deux, rue/roue).
+6. **Mnemonics (mems)** — optional memory hook per phrase shown on reveal (`Phrase.mnemonic`).
+7. **Customizable daily-goal tiers** — casual/regular/serious/intense (`User.daily_goal_tier`); the
+   back-planner recommends one from days-to-trip. Add an in-session **combo bonus** (consecutive-correct XP).
+8. **Word-strength visualization** — render each phrase's FSRS stability/retrievability as a "lamp
+   brightness" bar on a My Phrases map grouped by gospel-framework section. No new data (derive from FSRS).
+
 ## Monetization (decision: free / donation)
 **Sent is free for everyone, ministry/donor-funded** (the YouVersion model) — maximizes reach and fits the
 reality that team members are already fundraising. No paywalls on the France track or any core feature.

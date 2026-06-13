@@ -10,6 +10,7 @@
     "last_active_date": { "type": "string", "format": "date", "description": "Last day the user completed a lesson" },
     "streak_freezes": { "type": "number", "default": 2, "description": "Streak-freeze tokens" },
     "daily_goal_minutes": { "type": "number", "default": 5, "description": "Daily session goal (finishable ~5-min cap)" },
+    "daily_goal_tier": { "type": "string", "enum": ["casual", "regular", "serious", "intense"], "default": "regular", "description": "Daily commitment tier; the countdown back-planner can recommend one" },
 
     "reminder_opt_in": { "type": "boolean", "default": false, "description": "User opted in to daily reminders" },
     "reminder_time": { "type": "string", "description": "Local time HH:MM for the daily training reminder" },

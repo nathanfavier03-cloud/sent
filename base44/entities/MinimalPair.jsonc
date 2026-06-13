@@ -1,0 +1,17 @@
+{
+  "name": "MinimalPair",
+  "type": "object",
+  "properties": {
+    "language_code": { "type": "string" },
+    "word_a": { "type": "string" },
+    "word_b": { "type": "string" },
+    "gloss_a": { "type": "string" },
+    "gloss_b": { "type": "string" },
+    "ipa_a": { "type": "string" },
+    "ipa_b": { "type": "string" },
+    "target_contrast": { "type": "string", "description": "The phoneme contrast, e.g. /e/ vs /ɛ/" },
+    "note": { "type": "string", "description": "Why it matters for being understood" },
+    "order": { "type": "number" }
+  },
+  "required": ["language_code", "word_a", "word_b"]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "ReadinessCheck",
+  "type": "object",
+  "properties": {
+    "user_id": { "type": "string" },
+    "track_code": { "type": "string" },
+    "country_code": { "type": "string" },
+    "language_code": { "type": "string" },
+    "score": { "type": "number", "description": "0-100 overall readiness" },
+    "ready": { "type": "boolean" },
+    "section_scores": { "type": "array", "items": { "type": "object" }, "description": "Per-section {section, score} e.g. phrases, verses, gospel, culture" },
+    "items_total": { "type": "number" },
+    "items_correct": { "type": "number" },
+    "taken_at": { "type": "string", "format": "date-time" }
+  },
+  "required": ["track_code"],
+  "rls": {
+    "read": { "created_by_id": "{{user.id}}" },
+    "write": { "created_by_id": "{{user.id}}" }
+  }
+}
