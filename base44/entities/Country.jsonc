@@ -6,6 +6,8 @@
     "code": { "type": "string", "description": "ISO country code, e.g. FR" },
     "region": { "type": "string" },
     "flag_emoji": { "type": "string" },
+    "latitude": { "type": "number", "description": "Country centroid latitude, for the 3D globe" },
+    "longitude": { "type": "number", "description": "Country centroid longitude, for the 3D globe" },
     "dominant_religion": { "type": "string" },
     "percent_christian": { "type": "number", "description": "Self-identified Christian %" },
     "percent_catholic": { "type": "number" },
