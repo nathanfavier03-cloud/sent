@@ -5,7 +5,7 @@ Phase 1 app. **The UI/UX is greenfield in Base44** — this brief is functional,
 The `standalone/` PWA is a *reference implementation of the ideas and flows only*; do not treat its
 styling or layout as prescriptive.
 
-> Brand intent stays the same: **Favier's Lighthouse**, "light to the nations." Warm, hopeful,
+> Brand intent stays the same: **Faviers Lighthouse**, "light to the nations." Warm, hopeful,
 > mobile-first, iPhone-optimized (iOS safe areas), light + dark mode. Exact look is Base44's call.
 
 ---

@@ -4,7 +4,7 @@
 
 **Sent** is a "Duolingo for missionaries" — short, daily, gamified pre-field training so anyone (short-term
 mission teams, church planters, individuals) can learn to share the Gospel in a specific language and
-culture **before they go**. A project of **Favier's Lighthouse**.
+culture **before they go**. A project of **Faviers Lighthouse**.
 
 Starter track: 🇫🇷 **France → French**.
 
@@ -94,4 +94,4 @@ field journal, shareable commissioning certificate.
 
 ---
 
-*Favier's Lighthouse — light to the nations.*
+*Faviers Lighthouse — light to the nations.*

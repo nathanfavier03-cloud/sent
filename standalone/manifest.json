@@ -1,7 +1,7 @@
 {
   "name": "Sent — Missionary Training",
   "short_name": "Sent",
-  "description": "Duolingo-style pre-field training to share the Gospel in another language and culture. By Favier's Lighthouse.",
+  "description": "Duolingo-style pre-field training to share the Gospel in another language and culture. By Faviers Lighthouse.",
   "start_url": "index.html",
   "scope": "./",
   "display": "standalone",
